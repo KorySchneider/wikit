@@ -80,17 +80,14 @@ wiki.page.data(query, { content: true }, (res) => {
       }
     }
     shortRes = shortRes.join('\n');
-    shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML tags
-    shortRes = shortRes.replace(/&#[0-9]*;/g, ''); // remove HTML ascii codes TODO encode them instead
-    shortRes = shortRes.replace(/\(listen\)/g, '') // remove 'listen' button text
-    shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
-    shortRes = shortRes.replace(/\.[^ ]/g, '. '); // fix space being removed after periods
 
-    // Execute
-    if (openInBrowser) {
-    } else {
-      console.log(lineWrap(shortRes, 75));
-    }
+    shortRes = shortRes.replace(/<(?:.|\n)*?>/g, '') // remove HTML tags
+                       .replace(/&#[0-9]*;/g, '') // remove HTML ascii codes TODO encode them instead
+                       .replace(/\(listen\)/g, '') // remove 'listen' button text
+                       .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
+                       .replace(/\.[^ ]/g, '. '); // fix space being removed after periods
+
+    console.log(lineWrap(shortRes, 75));
   } else {
     console.log('Not found :^(');
   }
