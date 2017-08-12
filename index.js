@@ -3,18 +3,35 @@
 
 const wiki = require('node-wikipedia');
 
-// Exit if no query
-if (process.argv.length <= 2) {
+let args = process.argv.slice(2, process.argv.length);
+
+// Exit if no arguments
+if (args.length == 0) {
+  // TODO update usage to include flags
   console.log('Usage: $ wikit <query>\n\nSome examples:\n$ wikit nodejs\n$ wikit empire state building');
   process.exit(-1);
 }
 
-// Get query
-const query = (process.argv.length > 3)
-  ? process.argv.slice(2, process.argv.length).join(' ')
-  : process.argv[2];
 
-// Search wikipedia
+// Flags
+let openInBrowser = false;
+
+// Parse flags
+for (let i=0; i < args.length; i++) {
+  if (args[i].startsWith('-')) {
+    switch(args[i]) {
+      case '-b':
+        openInBrowser = true;
+        args.splice(i, 1);
+        break;
+    }
+  }
+}
+
+// Get query
+const query = args.join(' ');
+
+// Scrape wikipedia
 wiki.page.data(query, { content: true }, (res) => {
   if (res) {
     res = res.text['*'].split('\n');
@@ -39,7 +56,12 @@ wiki.page.data(query, { content: true }, (res) => {
     shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
     shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
     //TODO replace html ascii codes
-    console.log(lineWrap(shortRes, 80));
+
+    if (openInBrowser) {
+      console.log('browser: ' + query);
+    } else {
+      console.log(lineWrap(shortRes, 80));
+    }
   } else {
     console.log('Not found :^(');
   }
