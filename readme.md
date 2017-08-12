@@ -11,10 +11,10 @@
 
 ### Usage
 
-`$ node index.js <query>`
+`$ wikit <query>`
 
 ### Examples
 
-`$ node index.js nodejs`
+`$ wikit nodejs`
 
-`$ node index.js empire state building`
+`$ wikit empire state building`
