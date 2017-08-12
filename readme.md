@@ -13,7 +13,7 @@
 
 `$ wikit <query>`
 
-### Examples
+Some examples:
 
 `$ wikit nodejs`
 
