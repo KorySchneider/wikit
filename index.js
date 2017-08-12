@@ -5,7 +5,7 @@ const wiki = require('node-wikipedia');
 
 let args = process.argv.slice(2, process.argv.length);
 
-// Exit and print usage if no arguments
+// If no arguments, print usage and exit
 if (args.length == 0) {
   console.log(`\
 Usage: $ wikit <query> [-flags]
