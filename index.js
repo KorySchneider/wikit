@@ -18,7 +18,7 @@ wiki.page.data(query, { content: true }, (res) => {
   let startIndex, endIndex;
   // Find start of relevant text
   for (let i=0; i < res.length; i++) {
-    if (res[i] == '</table>') {
+    if (res[i].startsWith('<div class="mw-parser-output"')) {
       startIndex = i + 1;
       break;
     }
@@ -33,7 +33,9 @@ wiki.page.data(query, { content: true }, (res) => {
 
   let shortRes = [];
   for (let i=startIndex; i < endIndex; i++) {
-    shortRes.push(res[i]);
+    if (res[i].startsWith('<p')) {
+      shortRes.push(res[i]);
+    }
   }
   shortRes = shortRes.join('\n');
   shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
