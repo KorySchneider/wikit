@@ -1,7 +1,6 @@
 'use strict';
 
-const wiki = require('node-wikipedia'),
-      pgm  = require('commander');
+const wiki = require('node-wikipedia');
 
 // Exit if no query
 if (process.argv.length <= 2) {
