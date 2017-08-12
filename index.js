@@ -1,11 +1,18 @@
 'use strict';
 
-let wiki = require("node-wikipedia");
+let wiki = require('node-wikipedia'),
+    pgm  = require('commander');
 
-let query = 'empire state building';
+if (process.argv.length <= 2) {
+  console.log('No search query, exiting...');
+  process.exit(-1);
+}
+
+let query = (process.argv.length > 3)
+  ? process.argv.slice(2, process.argv.length).join(' ')
+  : process.argv[2];
 
 wiki.page.data(query, { content: true }, (res) => {
-  //console.log(res.text['*']);
   res = res.text['*'].split('\n');
 
   let startIndex, endIndex;
