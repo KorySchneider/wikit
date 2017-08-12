@@ -1,6 +1,6 @@
 {
   "name": "wikit",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Wikipedia summaries from the command line",
   "main": "index.js",
   "bin": {
