@@ -82,6 +82,7 @@ wiki.page.data(query, { content: true }, (res) => {
     shortRes = shortRes.join('\n');
     shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
     shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
+    shortRes = shortRes.replace(/\.[^ ]/g, '. '); // fix space being removed after periods
     //TODO replace html ascii codes
 
     // Execute
