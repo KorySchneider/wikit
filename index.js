@@ -31,6 +31,17 @@ for (let i=0; i < args.length; i++) {
 // Get query
 const query = args.join(' ');
 
+// Open in browser if instructed
+if (openInBrowser) {
+  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search='
+  let format = (s) => {
+    s = s.replace(/ /g, '+') // replace spaces with +'s
+    return s.trim();
+  }
+  require('opn')(url + format(query));
+  process.exit(0);
+}
+
 // Scrape wikipedia
 wiki.page.data(query, { content: true }, (res) => {
   if (res) {
@@ -57,8 +68,8 @@ wiki.page.data(query, { content: true }, (res) => {
     shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
     //TODO replace html ascii codes
 
+    // Execute
     if (openInBrowser) {
-      console.log('browser: ' + query);
     } else {
       console.log(lineWrap(shortRes, 80));
     }
