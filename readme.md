@@ -1,5 +1,20 @@
 # wikit
 
+## Contents
+
+ - [About](#about)
+ - [Installation](#installation)
+ - [Usage](#usage)
+   - [Flags](#flags)
+   - [Examples](#examples)
+   - [Output](#output)
+ - [Bugs & Suggestions](#bugs-and-suggestions)
+
+## About
+
+Wikit is a command line program for getting Wikipedia summaries easily.
+
+#### Wikit
 > Verb. The act of looking up something at www.wikipedia.org, the prominent open source encyclopedia.
 >
 > Derivation comes from the eventual contraction of the suggestion that a person "wikipedia it" which evolved into "wiki it" which became simply "wikit".
@@ -17,11 +32,11 @@ Quotes are not required for multi-word queries.
 
 Flags can be placed anywhere.
 
-#### Flags
+### Flags
 
  - **-b** ... Open in browser
 
-#### Examples
+### Examples
 
 `$ wikit wikipedia`
 
@@ -29,11 +44,11 @@ Flags can be placed anywhere.
 
 `$ wikit linux -b`
 
-#### Output
+### Output
 
 The output will be the paragraphs of the wikipedia article before the table of contents. For example:
 
-````
+```
 $ wikit arch linux
 Arch Linux (or Arch /ˈɑːrtʃ/) is a Linux distribution for computers based on
 x86-64 architectures. Arch Linux is composed predominantly of free and open-source
@@ -50,9 +65,9 @@ documentation in the form of a community wiki, called the ArchWiki. The wiki
 is widely regarded among the entire Linux community and ecosystem for often
 having the most recent information on a specific topic that go beyond Arch Linux
 only.
-````
+```
 
-### Bugs & Suggestions
+## Bugs and Suggestions
 
 Please create an issue
 [here](https://github.com/koryschneider/wikit/issues/new). Thanks!
