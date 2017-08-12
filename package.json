@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "Wikipedia summaries from the command line",
   "main": "index.js",
+  "bin": {
+    "wikit": "./index.js"
+  },
   "dependencies": {
     "node-wikipedia": "^0.0.2"
   },
