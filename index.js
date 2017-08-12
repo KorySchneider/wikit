@@ -87,7 +87,7 @@ wiki.page.data(query, { content: true }, (res) => {
     // Execute
     if (openInBrowser) {
     } else {
-      console.log(lineWrap(shortRes, 80));
+      console.log(lineWrap(shortRes, 75));
     }
   } else {
     console.log('Not found :^(');
