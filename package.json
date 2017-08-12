@@ -1,7 +1,7 @@
 {
-  "name": "wiki-cli",
+  "name": "wikit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Wikipedia summaries from the command line",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.11.0",
@@ -9,13 +9,13 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koryschneider/wiki-cli.git"
   },
-  "author": "",
+  "author": "Kory Schneider",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/koryschneider/wiki-cli/issues"
