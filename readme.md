@@ -5,11 +5,11 @@
 > Derrivation comes from the eventual contraction of the suggestion that a person "wikipedia- it" which evolved into "wiki it" which became simply "wikit".
  - [urbandictionary.com](https://www.urbandictionary.com/define.php?term=wikit)
 
-### Installation
+## Installation
 
 `$ npm install wikit`
 
-### Usage
+## Usage
 
 `$ wikit <query>`
 
