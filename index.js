@@ -111,6 +111,7 @@ function lineWrap(txt, max) {
     formattedText += text.slice(0, i) + '\n';
     text = text.slice(i + 1, text.length);
   }
+  formattedText += text; // add remaining text
 
   return formattedText;
 }
