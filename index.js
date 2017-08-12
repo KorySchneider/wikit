@@ -5,7 +5,7 @@ const wiki = require('node-wikipedia');
 
 // Exit if no query
 if (process.argv.length <= 2) {
-  console.log('No search query, exiting...');
+  console.log('Usage: $ wikit <query>\n\nSome examples:\n$ wikit nodejs\n$ wikit empire state building');
   process.exit(-1);
 }
 
