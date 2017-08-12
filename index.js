@@ -5,10 +5,26 @@ const wiki = require('node-wikipedia');
 
 let args = process.argv.slice(2, process.argv.length);
 
-// Exit if no arguments
+// Exit and print usage if no arguments
 if (args.length == 0) {
-  // TODO update usage to include flags
-  console.log('Usage: $ wikit <query>\n\nSome examples:\n$ wikit nodejs\n$ wikit empire state building');
+  console.log(`\
+Usage: $ wikit <query> [-flags]
+
+Quotes are not required for multi-word queries.
+Flags can be placed anywhere.
+
+  Flags:
+
+    -b    Open in browser
+
+  Examples:
+
+    $ wikit nodejs
+
+    $ wikit empire state building
+
+    $ wikit linux -b`);
+
   process.exit(-1);
 }
 
