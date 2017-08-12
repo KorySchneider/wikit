@@ -30,14 +30,14 @@ Flags can be placed anywhere.
 
 
 // Flags
-let openInBrowser = false;
+let browserFlag = false;
 
 // Parse flags
 for (let i=0; i < args.length; i++) {
   if (args[i].startsWith('-')) {
     switch(args[i]) {
       case '-b':
-        openInBrowser = true;
+        browserFlag = true;
         args.splice(i, 1);
         break;
     }
@@ -48,15 +48,7 @@ for (let i=0; i < args.length; i++) {
 const query = args.join(' ');
 
 // Open in browser if instructed
-if (openInBrowser) {
-  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search='
-  let format = (s) => {
-    s = s.replace(/ /g, '+') // replace spaces with +'s
-    return s.trim();
-  }
-  require('opn')(url + format(query));
-  process.exit(0);
-}
+if (browserFlag) openInBrowser();
 
 // Scrape wikipedia
 wiki.page.data(query, { content: true }, (res) => {
@@ -87,6 +79,11 @@ wiki.page.data(query, { content: true }, (res) => {
                        .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
                        .replace(/\.[^ ]/g, '. '); // fix space being removed after periods
 
+    if (shortRes.includes('may refer to:')) {
+      console.log('Ambiguous results, opening in browser...');
+      openInBrowser();
+    }
+
     console.log(lineWrap(shortRes, 75));
   } else {
     console.log('Not found :^(');
@@ -113,4 +110,14 @@ function lineWrap(txt, max) {
   formattedText += text; // add remaining text
 
   return formattedText;
+}
+
+function openInBrowser() {
+  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search='
+  let format = (s) => {
+    s = s.replace(/ /g, '+') // replace spaces with +'s
+    return s.trim();
+  }
+  require('opn')(url + format(query));
+  process.exit(0);
 }
