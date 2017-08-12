@@ -34,7 +34,7 @@ Flags can be placed anywhere.
 
 ### Flags
 
- - **-b** ... Open in browser
+ - -b ... Open full Wikipedia article in browser
 
 ### Examples
 
