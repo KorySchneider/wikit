@@ -39,8 +39,29 @@ wiki.page.data(query, { content: true }, (res) => {
     shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
     shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
     //TODO replace html ascii codes
-    console.log(shortRes);
+    console.log(lineWrap(shortRes, 80));
   } else {
     console.log('Not found :^(');
   }
 });
+
+function lineWrap(txt, max) {
+  // txt: text to format
+  // max: max line length (approx)
+
+  let formattedText = '';
+  let text = txt.replace(/\n/g, ''); // remove newline characters
+
+  while (text.length > max) {
+    // Find next space after max
+    let i = max;
+    while (text[i] !== ' ') {
+      i++;
+    }
+    // Append line to formattedText and remove it from text
+    formattedText += text.slice(0, i) + '\n';
+    text = text.slice(i + 1, text.length);
+  }
+
+  return formattedText;
+}
