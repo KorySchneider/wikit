@@ -11,13 +11,23 @@
 
 ### Usage
 
-`$ wikit <query>`
+Syntax: `$ wikit <query> [-flags]`
 
-Some examples:
+Quotes are not required for multi-word queries.
+
+Flags can be placed anywhere.
+
+#### Flags:
+
+ - **-b** ... Open in browser
+
+#### Examples:
 
 `$ wikit nodejs`
 
 `$ wikit empire state building`
+
+`$ wikit linux -b`
 
 ### Bugs & Suggestions
 
