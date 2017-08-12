@@ -15,27 +15,31 @@ const query = (process.argv.length > 3)
 
 // Search wikipedia
 wiki.page.data(query, { content: true }, (res) => {
-  res = res.text['*'].split('\n');
+  if (res) {
+    res = res.text['*'].split('\n');
 
-  let startIndex, endIndex;
-  for (let i=0; i < res.length; i++) {
-    if (res[i].startsWith('<div class="mw-parser-output"')) {
-      startIndex = i + 1;
-    } else if (res[i].startsWith('<div id="toc"')) {
-      endIndex = i - 1;
-      break;
+    let startIndex, endIndex;
+    for (let i=0; i < res.length; i++) {
+      if (res[i].startsWith('<div class="mw-parser-output"')) {
+        startIndex = i + 1;
+      } else if (res[i].startsWith('<div id="toc"')) {
+        endIndex = i - 1;
+        break;
+      }
     }
-  }
 
-  let shortRes = [];
-  for (let i=startIndex; i < endIndex; i++) {
-    if (res[i].startsWith('<p')) {
-      shortRes.push(res[i]);
+    let shortRes = [];
+    for (let i=startIndex; i < endIndex; i++) {
+      if (res[i].startsWith('<p')) {
+        shortRes.push(res[i]);
+      }
     }
+    shortRes = shortRes.join('\n');
+    shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
+    shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
+    //TODO replace html ascii codes
+    console.log(shortRes);
+  } else {
+    console.log('Not found :^(');
   }
-  shortRes = shortRes.join('\n');
-  shortRes = shortRes.replace(/<(?:.|\n)*?>/g, ''); // remove HTML
-  shortRes = shortRes.replace(/\[[0-9]*\]|\[note [0-9]*\]/g, ''); // remove citation numbers
-  //TODO replace html ascii codes
-  console.log(shortRes);
 });
