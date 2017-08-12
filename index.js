@@ -1,14 +1,14 @@
 'use strict';
 
-let wiki = require('node-wikipedia'),
-    pgm  = require('commander');
+const wiki = require('node-wikipedia'),
+      pgm  = require('commander');
 
 if (process.argv.length <= 2) {
   console.log('No search query, exiting...');
   process.exit(-1);
 }
 
-let query = (process.argv.length > 3)
+const query = (process.argv.length > 3)
   ? process.argv.slice(2, process.argv.length).join(' ')
   : process.argv[2];
 
@@ -16,16 +16,10 @@ wiki.page.data(query, { content: true }, (res) => {
   res = res.text['*'].split('\n');
 
   let startIndex, endIndex;
-  // Find start of relevant text
   for (let i=0; i < res.length; i++) {
     if (res[i].startsWith('<div class="mw-parser-output"')) {
       startIndex = i + 1;
-      break;
-    }
-  }
-  //Find end
-  for (let i=0; i < res.length; i++) {
-    if (res[i].startsWith('<div id="toc"')) {
+    } else if (res[i].startsWith('<div id="toc"')) {
       endIndex = i - 1;
       break;
     }
