@@ -1,0 +1,24 @@
+{
+  "name": "wiki-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "node-wikipedia": "^0.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koryschneider/wiki-cli.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koryschneider/wiki-cli/issues"
+  },
+  "homepage": "https://github.com/koryschneider/wiki-cli#readme"
+}
