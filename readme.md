@@ -23,7 +23,7 @@ Flags can be placed anywhere.
 
 #### Examples:
 
-`$ wikit nodejs`
+`$ wikit wikipedia`
 
 `$ wikit empire state building`
 
