@@ -3,15 +3,18 @@
 const wiki = require('node-wikipedia'),
       pgm  = require('commander');
 
+// Exit if no query
 if (process.argv.length <= 2) {
   console.log('No search query, exiting...');
   process.exit(-1);
 }
 
+// Get query
 const query = (process.argv.length > 3)
   ? process.argv.slice(2, process.argv.length).join(' ')
   : process.argv[2];
 
+// Search wikipedia
 wiki.page.data(query, { content: true }, (res) => {
   res = res.text['*'].split('\n');
 
