@@ -7,7 +7,7 @@
 
 ### Installation
 
-`$ npm install wikit`
+`$ npm install wikit -g`
 
 ### Usage
 
