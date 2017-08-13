@@ -52,7 +52,10 @@ else printWikiSummary();
 // ===== Functions =====
 
 function printWikiSummary() {
+  let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
+
   require('node-wikipedia').page.data(query, { content: true }, (res) => {
+    spinner.stop();
     if (res) {
       res = res.text['*'].split('\n');
 
