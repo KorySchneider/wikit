@@ -17,7 +17,7 @@
 
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koryschneider/wikit"
+    "url": "https://github.com/koryschneider/wikit"
   },
   "homepage": "https://github.com/koryschneider/wikit#readme",
   "bugs": {
