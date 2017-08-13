@@ -25,7 +25,7 @@
   },
 
   "license": "MIT",
-  "keywords": [ "cli", "wikipedia" ],
+  "keywords": [ "cli", "wiki", "wikipedia" ],
   "description": "Wikipedia summaries from the command line",
   "author": "Kory Schneider"
 }
