@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-const wiki = require('node-wikipedia');
-
 let args = process.argv.slice(2, process.argv.length);
 
 // If no arguments, print usage and exit
@@ -38,57 +36,61 @@ for (let i=0; i < args.length; i++) {
     switch(args[i]) {
       case '-b':
         browserFlag = true;
-        args.splice(i, 1);
+        args.splice(i, 1); // remove flag from args array
         break;
     }
   }
 }
 
-// Get query
 const query = args.join(' ');
 
-// Open in browser if instructed
+// Execute
 if (browserFlag) openInBrowser();
+else printWikiSummary();
 
-// Scrape wikipedia
-wiki.page.data(query, { content: true }, (res) => {
-  if (res) {
-    res = res.text['*'].split('\n');
 
-    let startIndex, endIndex;
-    for (let i=0; i < res.length; i++) {
-      if (res[i].startsWith('<div class="mw-parser-output"')) {
-        startIndex = i + 1;
-      } else if (res[i].startsWith('<div id="toc"')) {
-        endIndex = i - 1;
-        break;
+// ===== Functions =====
+
+function printWikiSummary() {
+  require('node-wikipedia').page.data(query, { content: true }, (res) => {
+    if (res) {
+      res = res.text['*'].split('\n');
+
+      let startIndex, endIndex;
+      for (let i=0; i < res.length; i++) {
+        if (res[i].startsWith('<div class="mw-parser-output"')) {
+          startIndex = i + 1;
+        } else if (res[i].startsWith('<div id="toc"')) {
+          endIndex = i - 1;
+          break;
+        }
       }
-    }
 
-    let shortRes = [];
-    for (let i=startIndex; i < endIndex; i++) {
-      if (res[i].startsWith('<p')) {
-        shortRes.push(res[i]);
+      let shortRes = [];
+      for (let i=startIndex; i < endIndex; i++) {
+        if (res[i].startsWith('<p')) {
+          shortRes.push(res[i]);
+        }
       }
+      shortRes = shortRes.join('\n');
+
+      shortRes = shortRes.replace(/<(?:.|\n)*?>/g, '') // remove HTML tags
+                         .replace(/&#[0-9]*;/g, '') // remove HTML ascii codes TODO encode them instead
+                         .replace(/\(listen\)/g, '') // remove 'listen' button text
+                         .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
+                         .replace(/\.[^ ]/g, '. '); // fix space being removed after periods
+
+      if (shortRes.includes('may refer to:')) {
+        console.log('Ambiguous results, opening in browser...');
+        openInBrowser();
+      }
+
+      console.log(lineWrap(shortRes, 75));
+    } else {
+      console.log('Not found :^(');
     }
-    shortRes = shortRes.join('\n');
-
-    shortRes = shortRes.replace(/<(?:.|\n)*?>/g, '') // remove HTML tags
-                       .replace(/&#[0-9]*;/g, '') // remove HTML ascii codes TODO encode them instead
-                       .replace(/\(listen\)/g, '') // remove 'listen' button text
-                       .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
-                       .replace(/\.[^ ]/g, '. '); // fix space being removed after periods
-
-    if (shortRes.includes('may refer to:')) {
-      console.log('Ambiguous results, opening in browser...');
-      openInBrowser();
-    }
-
-    console.log(lineWrap(shortRes, 75));
-  } else {
-    console.log('Not found :^(');
-  }
-});
+  });
+}
 
 function lineWrap(txt, max) {
   // txt: text to format
