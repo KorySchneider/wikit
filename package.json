@@ -1,27 +1,30 @@
 {
   "name": "wikit",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Wikipedia summaries from the command line",
+  "author": "Kory Schneider",
+
   "main": "index.js",
   "bin": {
     "wikit": "./index.js"
   },
+  "scripts": {
+    "start": "node index.js"
+  },
+
   "dependencies": {
     "node-wikipedia": "^0.0.2",
     "opn": "^5.1.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node index.js"
-  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koryschneider/wikit"
   },
-  "author": "Kory Schneider",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/koryschneider/wikit/issues"
   },
-  "homepage": "https://github.com/koryschneider/wikit#readme"
+  "homepage": "https://github.com/koryschneider/wikit#readme",
+  "keywords": [ "cli", "wikipedia" ]
 }
