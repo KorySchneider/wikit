@@ -1,8 +1,6 @@
 {
   "name": "wikit",
   "version": "1.2.8",
-  "description": "Wikipedia summaries from the command line",
-  "author": "Kory Schneider",
 
   "main": "index.js",
   "bin": {
@@ -21,10 +19,13 @@
     "type": "git",
     "url": "git+https://github.com/koryschneider/wikit"
   },
-  "license": "MIT",
+  "homepage": "https://github.com/koryschneider/wikit#readme",
   "bugs": {
     "url": "https://github.com/koryschneider/wikit/issues"
   },
-  "homepage": "https://github.com/koryschneider/wikit#readme",
-  "keywords": [ "cli", "wikipedia" ]
+
+  "license": "MIT",
+  "keywords": [ "cli", "wikipedia" ],
+  "description": "Wikipedia summaries from the command line",
+  "author": "Kory Schneider"
 }
