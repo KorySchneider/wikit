@@ -29,7 +29,6 @@ Wikit is a command line program for getting Wikipedia summaries easily.
 Syntax: `$ wikit <query> [-flags]`
 
 Quotes are not required for multi-word queries.
-
 Flags can be placed anywhere.
 
 ### Flags
