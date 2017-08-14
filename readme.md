@@ -33,7 +33,10 @@ Flags can be placed anywhere.
 
 ### Flags
 
- - -b ... Open full Wikipedia article in browser
+| flag | description |
+| ---- | ----------- |
+| -b | Open full Wikipedia article in browser |
+| -l <num> | Set line wrap length to `num` |
 
 ### Examples
 
@@ -45,7 +48,8 @@ Flags can be placed anywhere.
 
 ### Output
 
-The output will be the paragraphs of the wikipedia article before the table of contents. Line length is neatly wrapped at about 80 characters. For example:
+The output will be the paragraphs of the wikipedia article before the table of contents.
+Line length is neatly wrapped at about 80 characters by default. For example:
 
 ```
 $ wikit arch linux
