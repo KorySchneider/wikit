@@ -15,7 +15,7 @@ Flags can be placed anywhere.
 
     -b           Open full Wikipedia article in browser
 
-    -l <NUM>     Set line wrap length to NUM
+    -l <NUM>     Set line wrap length to NUM (minimum 15)
 
   Examples:
 
@@ -30,7 +30,14 @@ Flags can be placed anywhere.
 
 // Flags
 let _browserFlag = false;
-let _lineLength = 75;
+let _lineLength = process.stdout.columns - 10; // Terminal width - 10
+
+if (_lineLength > 80) {
+  // Keep it nice to read in large terminal windows
+  _lineLength = 80;
+} else if (_lineLength < 15) {
+  _lineLength = 15;
+}
 
 // Parse flags
 for (let i=0; i < args.length; i++) {
