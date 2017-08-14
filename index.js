@@ -28,16 +28,30 @@ Flags can be placed anywhere.
 
 
 // Flags
-let browserFlag = false;
+let _browserFlag = false;
+let _lineLength = 75;
 
 // Parse flags
 for (let i=0; i < args.length; i++) {
   if (args[i].startsWith('-')) {
     switch(args[i]) {
       case '-b':
-        browserFlag = true;
+        _browserFlag = true;
         args.splice(i, 1); // remove flag from args array
         break;
+
+      case '-l':
+        let newLength = parseInt(args[i + 1]);
+        if (newLength) {
+          _lineLength = newLength;
+          if (_lineLength < 15) {
+            _lineLength = 15; // things break if length is less than 15
+          }
+          args.splice(i, 2); // remove flag and length
+        } else {
+          console.log(`Invalid line length: ${args[i + 1]}`);
+          process.exit(-1);
+        }
     }
   }
 }
@@ -45,7 +59,7 @@ for (let i=0; i < args.length; i++) {
 const query = args.join(' ');
 
 // Execute
-if (browserFlag) openInBrowser();
+if (_browserFlag) openInBrowser();
 else printWikiSummary();
 
 
@@ -88,7 +102,7 @@ function printWikiSummary() {
         openInBrowser();
       }
 
-      console.log(lineWrap(shortRes, 75));
+      console.log(lineWrap(shortRes, _lineLength));
     } else {
       console.log('Not found :^(');
     }
