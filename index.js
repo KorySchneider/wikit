@@ -13,7 +13,9 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b    Open in browser
+    -b           Open full Wikipedia article in browser
+
+    -l <NUM>     Set line wrap length to NUM
 
   Examples:
 
@@ -25,7 +27,6 @@ Flags can be placed anywhere.
 
   process.exit(-1);
 }
-
 
 // Flags
 let _browserFlag = false;
