@@ -36,7 +36,7 @@ Flags can be placed anywhere.
 | flag | description |
 | ---- | ----------- |
 | -b | Open full Wikipedia article in browser |
-| -l <num> | Set line wrap length to `num` |
+| -l <num> | Set line wrap length to `num` (minimum 15) |
 
 ### Examples
 
