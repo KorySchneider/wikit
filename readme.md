@@ -45,9 +45,7 @@ Flags can be placed anywhere.
 
 ### Output
 
-The output will be the paragraphs of the wikipedia article before the table of contents. Line length is neatly wrapped at about 80 characters.
-
-For example:
+The output will be the paragraphs of the wikipedia article before the table of contents. Line length is neatly wrapped at about 80 characters. For example:
 
 ```
 $ wikit arch linux
