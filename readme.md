@@ -49,7 +49,8 @@ Flags can be placed anywhere.
 ### Output
 
 The output will be the paragraphs of the wikipedia article before the table of contents.
-Line length is neatly wrapped at about 80 characters by default. For example:
+Line length is neatly wrapped based on your terminal's window size, with a max
+of about 80 characters. For example:
 
 ```
 $ wikit arch linux
