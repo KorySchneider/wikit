@@ -103,7 +103,6 @@ function printWikiSummary() {
                          .replace(/&#[0-9]*;/g, '') // remove HTML ascii codes TODO encode them instead
                          .replace(/\(listen\)/g, '') // remove 'listen' button text
                          .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
-                         .replace(/\.[^ ]/g, '. '); // fix space being removed after periods
 
       if (shortRes.includes('may refer to:')) {
         console.log('Ambiguous results, opening in browser...');
@@ -118,21 +117,26 @@ function printWikiSummary() {
 }
 
 function lineWrap(txt, max) {
-  // txt: text to format
-  // max: max line length (approx)
-
   let formattedText = '';
-  let text = txt.replace(/\n/g, ''); // remove newline characters
+  let text = txt.trim();
+  text = text.replace(/\n/g, ''); // remove newlines
 
   while (text.length > max) {
-    // Find next space after max
-    let i = max;
-    while (text[i] !== ' ') {
-      i++;
+    if (text.length < max) {
+      return text;
     }
-    // Append line to formattedText and remove it from text
-    formattedText += text.slice(0, i) + '\n';
-    text = text.slice(i + 1, text.length);
+
+    let nextSpaceIndex = -1;
+    for (let i=max; i < text.length; i++) {
+      if (text[i] == ' ') {
+        nextSpaceIndex = i;
+        break;
+      }
+    }
+    if (nextSpaceIndex < 0) nextSpaceIndex = max; // If there was no space char
+
+    formattedText += text.slice(0, nextSpaceIndex) + '\n';
+    text = text.slice(nextSpaceIndex + 1, text.length);
   }
   formattedText += text; // add remaining text
 
