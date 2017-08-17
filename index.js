@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 'use strict';
 
+// Multilanguage support. Uncomment or add appropriate string for your language
+let languages = {
+    english: 'en',
+//    deutsch: 'de',
+//    russian: 'ru',
+//    spanish: 'es',
+};
+
 let args = process.argv.slice(2, process.argv.length);
 
 // If no arguments, print usage and exit
@@ -68,15 +76,17 @@ const query = args.join(' ');
 
 // Execute
 if (_browserFlag) openInBrowser();
-else printWikiSummary();
-
+else for (let language in languages) {
+    let lang = { language: language, lang: languages[language] }
+    printWikiSummary(lang);
+}
 
 // ===== Functions =====
 
-function printWikiSummary() {
+function printWikiSummary(language) {
   let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
 
-  require('node-wikipedia').page.data(query, { content: true }, (res) => {
+  require('node-wikipedia').page.data(query, { content: true, lang: language.lang }, (res) => {
     spinner.stop();
     if (res) {
       res = res.text['*'].split('\n');
@@ -111,7 +121,7 @@ function printWikiSummary() {
 
       console.log(lineWrap(shortRes, _lineLength));
     } else {
-      console.log('Not found :^(');
+      console.log(language.language, 'article not found :^(');
     }
   });
 }
