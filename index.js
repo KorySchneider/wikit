@@ -29,7 +29,7 @@ Flags can be placed anywhere.
 }
 
 // Flags
-let _browserFlag = false;
+let _openInBrowser = false;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
 
 if (_lineLength > 80) {
@@ -44,7 +44,7 @@ for (let i=0; i < args.length; i++) {
   if (args[i].startsWith('-')) {
     switch(args[i]) {
       case '-b':
-        _browserFlag = true;
+        _openInBrowser = true;
         args.splice(i, 1); // remove flag from args array
         break;
 
@@ -67,7 +67,7 @@ for (let i=0; i < args.length; i++) {
 const query = args.join(' ');
 
 // Execute
-if (_browserFlag) openInBrowser();
+if (_openInBrowser) openInBrowser();
 else printWikiSummary();
 
 
