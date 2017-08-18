@@ -37,6 +37,7 @@ Flags can be placed anywhere.
 | ---- | ----------- |
 | `-b` | Open full Wikipedia article in browser |
 | `-l num` | Set line wrap length to `num` (minimum 15) |
+| `-lang langCode` | Specify language. `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp). |
 
 ### Examples
 
@@ -45,6 +46,8 @@ Flags can be placed anywhere.
 `$ wikit empire state building`
 
 `$ wikit linux -b`
+
+`$ wikit gato -lang es`
 
 ### Output
 
