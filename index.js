@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
+const path = require('path'),
+      Configstore = require('configstore'),
+      pkg = require(path.join(__dirname, '/package.json'));
+
+const conf = new Configstore(pkg.name, { lang: 'en' });
+
 let args = process.argv.slice(2, process.argv.length);
 
 // If no arguments, print usage and exit
@@ -13,9 +19,12 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b           Open full Wikipedia article in browser
+    -b              Open full Wikipedia article in browser
 
-    -l <NUM>     Set line wrap length to NUM (minimum 15)
+    -line <NUM>     Set line wrap length to NUM (minimum 15)
+
+    -lang <LANG>    Specify language;
+    -l <LANG>       LANG is an HTML ISO language code
 
   Examples:
 
@@ -23,7 +32,9 @@ Flags can be placed anywhere.
 
     $ wikit empire state building
 
-    $ wikit linux -b`);
+    $ wikit linux -b
+
+    $ wikit gato -lang es`);
 
   process.exit(-1);
 }
@@ -31,7 +42,7 @@ Flags can be placed anywhere.
 // Flags
 let _openInBrowser = false;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
-let _lang = 'en';
+let _lang = conf.get('lang');
 
 if (_lineLength > 80) {
   // Keep it nice to read in large terminal windows
@@ -49,7 +60,7 @@ for (let i=0; i < args.length; i++) {
         args.splice(i, 1); // remove flag from args array
         break;
 
-      case '-l':
+      case '-line':
         let newLength = parseInt(args[i + 1]);
         if (newLength) {
           _lineLength = newLength;
@@ -63,10 +74,11 @@ for (let i=0; i < args.length; i++) {
         }
         break;
 
+      case '-l':
       case '-lang':
         let validLang = false;
         let languages = JSON.parse(
-          require('fs').readFileSync(require('path').join(__dirname, 'languages.json'))
+          require('fs').readFileSync(path.join(__dirname, 'data/languages.json'))
         );
 
         Object.keys(languages).forEach(l => {
