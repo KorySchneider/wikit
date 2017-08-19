@@ -148,10 +148,6 @@ function lineWrap(txt, max) {
   text = text.replace(/\n/g, ''); // remove newlines
 
   while (text.length > max) {
-    if (text.length < max) {
-      return text;
-    }
-
     let nextSpaceIndex = -1;
     for (let i=max; i < text.length; i++) {
       if (text[i] == ' ') {
