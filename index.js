@@ -19,9 +19,12 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b           Open full Wikipedia article in browser
+    -b              Open full Wikipedia article in browser
 
-    -l <NUM>     Set line wrap length to NUM (minimum 15)
+    -line <NUM>     Set line wrap length to NUM (minimum 15)
+
+    -lang <LANG>    Specify language;
+    -l <LANG>       LANG is an HTML ISO language code
 
   Examples:
 
@@ -29,7 +32,9 @@ Flags can be placed anywhere.
 
     $ wikit empire state building
 
-    $ wikit linux -b`);
+    $ wikit linux -b
+
+    $ wikit gato -lang es`);
 
   process.exit(-1);
 }
@@ -55,7 +60,7 @@ for (let i=0; i < args.length; i++) {
         args.splice(i, 1); // remove flag from args array
         break;
 
-      case '-l':
+      case '-line':
         let newLength = parseInt(args[i + 1]);
         if (newLength) {
           _lineLength = newLength;
@@ -69,6 +74,7 @@ for (let i=0; i < args.length; i++) {
         }
         break;
 
+      case '-l':
       case '-lang':
         let validLang = false;
         let languages = JSON.parse(
