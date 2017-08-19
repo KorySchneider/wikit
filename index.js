@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
+const path = require('path'),
+      Configstore = require('configstore'),
+      pkg = require(path.join(__dirname, '/package.json'));
+
+const conf = new Configstore(pkg.name, { lang: 'en' });
+
 let args = process.argv.slice(2, process.argv.length);
 
 // If no arguments, print usage and exit
@@ -31,7 +37,7 @@ Flags can be placed anywhere.
 // Flags
 let _openInBrowser = false;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
-let _lang = 'en';
+let _lang = conf.get('lang');
 
 if (_lineLength > 80) {
   // Keep it nice to read in large terminal windows
@@ -66,7 +72,7 @@ for (let i=0; i < args.length; i++) {
       case '-lang':
         let validLang = false;
         let languages = JSON.parse(
-          require('fs').readFileSync(require('path').join(__dirname, 'languages.json'))
+          require('fs').readFileSync(path.join(__dirname, 'languages.json'))
         );
 
         Object.keys(languages).forEach(l => {
