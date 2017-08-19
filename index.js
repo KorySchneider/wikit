@@ -29,8 +29,9 @@ Flags can be placed anywhere.
 }
 
 // Flags
-let _browserFlag = false;
+let _openInBrowser = false;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
+let _lang = 'en';
 
 if (_lineLength > 80) {
   // Keep it nice to read in large terminal windows
@@ -44,7 +45,7 @@ for (let i=0; i < args.length; i++) {
   if (args[i].startsWith('-')) {
     switch(args[i]) {
       case '-b':
-        _browserFlag = true;
+        _openInBrowser = true;
         args.splice(i, 1); // remove flag from args array
         break;
 
@@ -55,28 +56,53 @@ for (let i=0; i < args.length; i++) {
           if (_lineLength < 15) {
             _lineLength = 15; // things break if length is less than 15
           }
-          args.splice(i, 2); // remove flag and length
+          args.splice(i, 2); // remove flag and value
         } else {
           console.log(`Invalid line length: ${args[i + 1]}`);
           process.exit(-1);
         }
+        break;
+
+      case '-lang':
+        let validLang = false;
+        let languages = JSON.parse(
+          require('fs').readFileSync(require('path').join(__dirname, 'languages.json'))
+        );
+
+        Object.keys(languages).forEach(l => {
+          if (l == args[i + 1]) validLang = true;
+        });
+
+        if (validLang) {
+          _lang = args[i + 1];
+        } else {
+          console.log(`Invalid language: ${args[i + 1]}\nPlease use a two-character language code, e.g. 'en' for English.`);
+          process.exit(-1);
+        }
+
+        args.splice(i, 2); // remove flag and value
+        break;
     }
   }
 }
 
 const query = args.join(' ');
+if (query == '') {
+  console.log('Please enter a search query');
+  process.exit(-1);
+}
 
 // Execute
-if (_browserFlag) openInBrowser();
-else printWikiSummary();
+if (_openInBrowser) openInBrowser();
+else printWikiSummary(_lang);
 
 
 // ===== Functions =====
 
-function printWikiSummary() {
+function printWikiSummary(language) {
   let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
 
-  require('node-wikipedia').page.data(query, { content: true }, (res) => {
+  require('node-wikipedia').page.data(query, { content: true, lang: _lang }, (res) => {
     spinner.stop();
     if (res) {
       res = res.text['*'].split('\n');
