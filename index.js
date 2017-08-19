@@ -78,7 +78,7 @@ for (let i=0; i < args.length; i++) {
       case '-lang':
         let validLang = false;
         let languages = JSON.parse(
-          require('fs').readFileSync(path.join(__dirname, 'languages.json'))
+          require('fs').readFileSync(path.join(__dirname, 'data/languages.json'))
         );
 
         Object.keys(languages).forEach(l => {
