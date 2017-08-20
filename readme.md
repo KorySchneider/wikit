@@ -44,8 +44,7 @@ Flags can be placed anywhere.
 Click on a command to see the output.
 
 <details>
-<summary>`$ wikit wikipedia`</summary>
-```
+<summary>$ wikit wikipedia</summary>
  Wikipedia (/ˌwɪkɪˈpiːdiə/ WIK-i-PEE-dee-ə or /ˌwɪkiˈpiːdiə/ WIK-ee-PEE-dee-ə) is
  a free online encyclopedia with the aim to allow anyone to edit articles. Wikipedia
  is the largest and most popular general reference work on the Internet and is ranked
@@ -65,12 +64,10 @@ Click on a command to see the output.
  has been criticized for allegedly exhibiting systemic bias, presenting a mixture
  of "truths, half truths, and some falsehoods", and, in controversial topics, being
  subject to manipulation and spin.
-```
 </details>
 
 <details>
-<summary>`$ wikit empire state building`</summary>
-```
+<summary>$ wikit empire state building</summary>
  The Empire State Building is a 102-story skyscraper located on Fifth Avenue between
  West 33rd and 34th Streets in Midtown, Manhattan, New York City. It has a roof height
  of 1,250 feet (381 m), and with its antenna included, it stands a total of 1,454
@@ -90,17 +87,15 @@ Click on a command to see the output.
  and confirmed by the New York City Board of Estimate. It was designated as a National
  Historic Landmark in 1986. In 2007, it was ranked number one on the AIA's List of
  America's Favorite Architecture.
-```
 </details>
 
 <details>
-<summary>`$ wikit linux -b`</summary>
+<summary>$ wikit linux -b</summary>
 This page: https://en.wikipedia.org/wiki/Linux opens in your (default) browser.
 </details>
 
 <details>
-<summary>`$ wikit -lang es jugo`</summary>
-```
+<summary>$ wikit -lang es jugo</summary>
  El jugo de frutas o zumo de frutas es la sustancia líquida que se extrae al licuar
  habitualmente por presión, aunque el conjunto de procesos intermedios puede suponer
  la cocción, molienda o centrifugación del producto original. Generalmente, el término
@@ -109,7 +104,6 @@ This page: https://en.wikipedia.org/wiki/Linux opens in your (default) browser.
  se venden jugos envasados, que pasan por un proceso durante su elaboración que les
  hace perder parte de sus beneficiosas propiedades nutricionales, una porción de
  jugo equivale a una porción de fruta.
-```
 </details>
 
 ### Output
