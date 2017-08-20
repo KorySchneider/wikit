@@ -64,7 +64,7 @@ Click on a command to see the output.
  and found that Wikipedia's level of accuracy approached that of Encyclopædia Britannica.Wikipedia
  has been criticized for allegedly exhibiting systemic bias, presenting a mixture
  of "truths, half truths, and some falsehoods", and, in controversial topics, being
- subject to manipulation and spin.`
+ subject to manipulation and spin.
 ```
 </details>
 
