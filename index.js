@@ -34,7 +34,7 @@ Flags can be placed anywhere.
 
     $ wikit linux -b
 
-    $ wikit gato -lang es`);
+    $ wikit jugo -lang es`);
 
   process.exit(-1);
 }
