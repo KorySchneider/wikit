@@ -155,9 +155,9 @@ function printWikiSummary(language) {
 }
 
 function lineWrap(txt, max) {
-  let formattedText = '';
+  let formattedText = ' ';
   let text = txt.trim();
-  text = text.replace(/\n/g, ''); // remove newlines
+  text = text.replace(/\n/g, ' '); // replace newlines with spaces
 
   while (text.length > max) {
     let nextSpaceIndex = -1;
@@ -167,12 +167,12 @@ function lineWrap(txt, max) {
         break;
       }
     }
-    if (nextSpaceIndex < 0) nextSpaceIndex = max; // If there was no space char
+    if (nextSpaceIndex < 0) nextSpaceIndex = max; // No space char was found
 
     formattedText += text.slice(0, nextSpaceIndex) + '\n';
-    text = text.slice(nextSpaceIndex + 1, text.length);
+    text = text.slice(nextSpaceIndex, text.length);
   }
-  formattedText += text; // add remaining text
+  formattedText += ' ' + text; // add remaining text
 
   return formattedText;
 }
