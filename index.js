@@ -172,7 +172,10 @@ function lineWrap(txt, max) {
     formattedText += text.slice(0, nextSpaceIndex) + '\n';
     text = text.slice(nextSpaceIndex, text.length);
   }
-  formattedText += ' ' + text; // add remaining text
+  // add remaining text
+  formattedText += (text.startsWith(' '))
+    ? text
+    : ' ' + text;
 
   return formattedText;
 }
