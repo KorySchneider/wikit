@@ -157,7 +157,7 @@ function printWikiSummary(language) {
 function lineWrap(txt, max) {
   let formattedText = ' ';
   let text = txt.trim();
-  text = text.replace(/\n/g, ''); // remove newlines
+  text = text.replace(/\n/g, ' '); // replace newlines with spaces
 
   while (text.length > max) {
     let nextSpaceIndex = -1;
