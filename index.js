@@ -157,7 +157,7 @@ function printWikiSummary(language) {
 function lineWrap(txt, max) {
   let formattedText = ' ';
   let text = txt.trim();
-  text = text.replace(/\n/g, ''); // remove newlines
+  text = text.replace(/\n/g, ' '); // replace newlines with spaces
 
   while (text.length > max) {
     let nextSpaceIndex = -1;
@@ -172,7 +172,10 @@ function lineWrap(txt, max) {
     formattedText += text.slice(0, nextSpaceIndex) + '\n';
     text = text.slice(nextSpaceIndex, text.length);
   }
-  formattedText += ' ' + text; // add remaining text
+  // add remaining text
+  formattedText += (text.startsWith(' '))
+    ? text
+    : ' ' + text;
 
   return formattedText;
 }

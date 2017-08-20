@@ -1,6 +1,6 @@
 {
   "name": "wikit",
-  "version": "1.4.3",
+  "version": "2.0.1",
   "main": "index.js",
   "bin": {
     "wikit": "./index.js"

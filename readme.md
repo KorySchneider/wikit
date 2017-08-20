@@ -36,8 +36,8 @@ Flags can be placed anywhere.
 | Flag | Description |
 | ---- | ----------- |
 | `-b` | Open full Wikipedia article in browser. |
-| `-l num` | Set line wrap length to `num` (minimum 15). |
-| `-lang langCode` | Specify language. `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp). |
+| `-lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp). |
+| `-line num` | Set line wrap length to `num` (minimum 15). |
 
 ### Examples
 
