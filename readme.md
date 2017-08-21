@@ -31,6 +31,8 @@ Syntax: `$ wikit <query> [-flags]`
 Quotes are not required for multi-word queries.
 Flags can be placed anywhere.
 
+To change the default language, edit `~/.config/configstore/wikit.json`.
+
 ### Flags
 
 | Flag | Description |
