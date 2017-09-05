@@ -19,7 +19,7 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b              Open full Wikipedia article in browser
+    -b              Open Wikipedia article in browser
 
     -line <NUM>     Set line wrap length to NUM (minimum 15)
 
