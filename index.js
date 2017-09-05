@@ -26,6 +26,8 @@ Flags can be placed anywhere.
     -lang <LANG>    Specify language;
     -l <LANG>       LANG is an HTML ISO language code
 
+    -d              Open disambiguation page in browser
+
   Examples:
 
     $ wikit nodejs
@@ -93,6 +95,12 @@ for (let i=0; i < args.length; i++) {
         }
 
         args.splice(i, 2); // remove flag and value
+        break;
+
+      case '-d':
+        args.splice(i, 1); // remove flag
+        args.push('(disambiguation)');
+        _openInBrowser = true;
         break;
     }
   }
