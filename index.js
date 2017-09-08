@@ -145,6 +145,9 @@ function printWikiSummary(language) {
       if (shortRes.includes('may refer to:')) {
         console.log('Ambiguous results, opening in browser...');
         openInBrowser();
+      } else if (shortRes.trim() == '') {
+        console.log('Error: no output\nOpening in browser...');
+        openInBrowser();
       }
 
       console.log(lineWrap(shortRes, _lineLength));
