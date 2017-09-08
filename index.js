@@ -19,12 +19,14 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b              Open full Wikipedia article in browser
+    -b              Open Wikipedia article in browser
 
     -line <NUM>     Set line wrap length to NUM (minimum 15)
 
     -lang <LANG>    Specify language;
     -l <LANG>       LANG is an HTML ISO language code
+
+    -d              Open disambiguation page in browser
 
   Examples:
 
@@ -93,6 +95,12 @@ for (let i=0; i < args.length; i++) {
         }
 
         args.splice(i, 2); // remove flag and value
+        break;
+
+      case '-d':
+        args.splice(i, 1); // remove flag
+        args.push('(disambiguation)');
+        _openInBrowser = true;
         break;
     }
   }
