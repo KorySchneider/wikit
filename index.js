@@ -43,6 +43,7 @@ Flags can be placed anywhere.
 
 // Flags
 let _openInBrowser = false;
+let _browser = null;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
 let _lang = conf.get('lang');
 
@@ -60,6 +61,12 @@ for (let i=0; i < args.length; i++) {
       case '-b':
         _openInBrowser = true;
         args.splice(i, 1); // remove flag from args array
+        break;
+
+      case '--browser':
+        _openInBrowser = true;
+        _browser = args[i + 1];
+        args.splice(i, 2);
         break;
 
       case '-line':
@@ -192,11 +199,15 @@ function lineWrap(txt, max) {
 }
 
 function openInBrowser() {
-  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search='
-  let format = (s) => {
-    s = s.replace(/ /g, '+') // replace spaces with +'s
-    return s.trim();
-  }
-  require('opn')(url + format(query));
+  const opn = require('opn');
+  const format = (s) => { return s.trim().replace(/ /g, '+'); }; // replace spaces with +'s
+  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search=';
+  url += format(query);
+
+  if (_browser)
+    opn(url, { app: _browser });
+  else
+    opn(url);
+
   process.exit(0);
 }
