@@ -19,14 +19,16 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -b              Open Wikipedia article in browser
+    -lang <LANG>         Specify language;
+    -l <LANG>            LANG is an HTML ISO language code
 
-    -line <NUM>     Set line wrap length to NUM (minimum 15)
+    -b                   Open Wikipedia article in browser
 
-    -lang <LANG>    Specify language;
-    -l <LANG>       LANG is an HTML ISO language code
+    --browser <BROWSER>  Open article in specific BROWSER
 
-    -d              Open disambiguation page in browser
+    -d                   Open disambiguation page in browser
+
+    -line <NUM>          Set line wrap length to NUM (minimum 15)
 
   Examples:
 
@@ -36,7 +38,7 @@ Flags can be placed anywhere.
 
     $ wikit linux -b
 
-    $ wikit jugo -lang es`);
+    $ wikit -lang es jugo`);
 
   process.exit(-1);
 }
