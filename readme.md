@@ -4,8 +4,8 @@ A command line program for getting Wikipedia summaries easily.
 
  - [Installation](#installation)
  - [Usage](#usage)
-   - [Flags](#flags)
    - [Examples](#examples)
+   - [Flags](#flags)
    - [Output](#output)
  - [Bugs & Suggestions](#bugs-and-suggestions)
 
@@ -23,16 +23,6 @@ Flags can be placed anywhere.
 
 To change the default language, edit `~/.config/configstore/wikit.json`.
 
-### Flags
-
-| Flag | Description |
-| ---- | ----------- |
-| `-lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp). |
-| `-line num` | Set line wrap length to `num` (minimum 15). |
-| `-b` | Open full Wikipedia article in default browser. |
-| `--browser browser` | Open full Wikipedia article in specific `browser`. |
-| `-d` | Open disambiguation page in browser. |
-
 ### Examples
 
 `$ wikit wikipedia`
@@ -42,6 +32,16 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 `$ wikit linux -b`
 
 `$ wikit -lang es jugo`
+
+### Flags
+
+| Flag | Description |
+| ---- | ----------- |
+| `-lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp). |
+| `-line num` | Set line wrap length to `num` (minimum 15). |
+| `-b` | Open full Wikipedia article in default browser. |
+| `--browser browser` | Open full Wikipedia article in specific `browser`. |
+| `-d` | Open disambiguation page in browser. |
 
 ### Output
 
