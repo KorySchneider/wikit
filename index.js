@@ -128,7 +128,7 @@ else printWikiSummary(_lang);
 
 // ===== Functions =====
 
-function printWikiSummary(language) {
+function printWikiSummary() {
   let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
 
   require('node-wikipedia').page.data(query, { content: true, lang: _lang }, (res) => {
@@ -136,22 +136,24 @@ function printWikiSummary(language) {
     if (res) {
       res = res.text['*'].split('\n');
 
-      let startIndex, endIndex;
+      let startIndex = 0;
+      let endIndex = res.length - 1;
       for (let i=0; i < res.length; i++) {
-        if (res[i].startsWith('<div class="mw-parser-output"')) {
+        if (res[i].startsWith('<div class="mw-parser-output')) {
           startIndex = i + 1;
-        } else if (res[i].startsWith('<div id="toc"')) {
+        } else if (res[i].startsWith('<div id="toc') || res[i].startsWith('<div class="toc')) {
           endIndex = i - 1;
           break;
         }
       }
 
       let shortRes = [];
-      for (let i=startIndex; i < endIndex; i++) {
-        if (res[i].startsWith('<p')) {
+      for (let i = startIndex; i < endIndex; i++) {
+        if (res[i].startsWith('<p>')) {
           shortRes.push(res[i]);
         }
       }
+
       shortRes = shortRes.join('\n');
 
       shortRes = shortRes.replace(/<(?:.|\n)*?>/g, '') // remove HTML tags
