@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "configstore": "^3.1.1",
+    "html2plaintext": "^2.0.1",
     "node-wikipedia": "^0.0.2",
     "opn": "^5.1.0",
     "ora": "^2.1.0"
