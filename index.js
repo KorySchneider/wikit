@@ -116,7 +116,7 @@ for (let i=0; i < args.length; i++) {
 }
 
 const query = args.join(' ');
-if (query == '') {
+if (query.trim() == '') {
   console.log('Please enter a search query');
   process.exit(-1);
 }
@@ -124,7 +124,6 @@ if (query == '') {
 // Execute
 if (_openInBrowser) openInBrowser();
 else printWikiSummary(_lang);
-
 
 // ===== Functions =====
 
