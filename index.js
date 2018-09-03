@@ -207,7 +207,7 @@ function lineWrap(txt, max) {
 
 function openInBrowser() {
   const opn = require('opn');
-  const format = (s) => { return s.trim().replace(/ /g, '+'); }; // replace spaces with +'s
+  const format = (s) => s.trim().replace(/ /g, '+'); // replace spaces with +'s
   let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search=';
   url += format(query);
 
