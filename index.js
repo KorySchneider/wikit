@@ -115,22 +115,23 @@ for (let i=0; i < args.length; i++) {
   }
 }
 
-const query = args.join(' ');
-if (query.trim() == '') {
+const query = args.join(' ').trim();
+if (query === '') {
   console.log('Please enter a search query');
   process.exit(-1);
 }
 
 // Execute
 if (_openInBrowser) openInBrowser();
-else printWikiSummary(_lang);
+else printWikiSummary(query);
 
 // ===== Functions =====
 
-function printWikiSummary() {
+function printWikiSummary(queryText) {
   let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
+  const h2p = require('html2plaintext');
 
-  require('node-wikipedia').page.data(query, { content: true, lang: _lang }, (res) => {
+  require('node-wikipedia').page.data(queryText, { content: true, lang: _lang }, (res) => {
     spinner.stop();
     if (res) {
       res = res.text['*'].split('\n');
@@ -153,28 +154,55 @@ function printWikiSummary() {
           inSummary = true;
         }
 
-        if (inSummary && !inTable) {
+        if (inSummary && !inTable && !line.startsWith('<td')) {
           summaryLines.push(line);
         }
       }
 
       let output = summaryLines.join('\n');
 
-      output = require('html2plaintext')(output)
+      output = h2p(output)
         .replace(/\[[0-9a-z]*\]|\[note [0-9a-z]*\]/g, '') // remove citation text
         .replace(/listen\)/g, ''); // remove 'listen' button text
 
-      // Check if output is summary
+      // Handle ambiguous results
       if (output.includes('may refer to:')) {
-        console.log('Ambiguous results, opening in browser...');
-        openInBrowser();
-      } else if (output.trim() == '') {
+        let links = {}; // Line text : link text
+        for (let i=0; i < res.length; i++) {
+          let line = res[i].trim();
+          if (line.startsWith('<li>')) {
+            let linkIndex = line.indexOf('/wiki/');
+            if (linkIndex > -1) {
+              let link = line.slice(line.indexOf('/wiki/') + 6);
+              link = link.split('');
+              link = link.splice(0, link.indexOf('"'));
+              link = link.join('');
+              links[h2p(line)] = link;
+            }
+          }
+        }
+
+        // Prompt user
+        require('inquirer')
+          .prompt([
+            { type: 'list',
+              name: 'selection',
+              message: `Ambiguous results, "${query}" may refer to:`,
+              choices: Object.keys(links) }
+          ])
+          .then(answers => {
+            printWikiSummary(links[answers.selection]);
+          })
+      }
+
+      else if (output.trim() == '') {
         console.log('Something went wrong, opening in browser...');
         openInBrowser();
       }
 
-      // Output summary text
-      console.log(lineWrap(output, _lineLength));
+      else { // Output summary text
+        console.log(lineWrap(output, _lineLength));
+      }
 
     } else { // No response
       console.log('Not found :^(');
