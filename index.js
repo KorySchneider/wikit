@@ -169,7 +169,7 @@ function printWikiSummary() {
         console.log('Ambiguous results, opening in browser...');
         openInBrowser();
       } else if (output.trim() == '') {
-        console.log('Error, opening in browser...');
+        console.log('Something went wrong, opening in browser...');
         openInBrowser();
       }
 
