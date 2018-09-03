@@ -41,7 +41,8 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 | `-line num` | Set line wrap length to `num` (minimum 15). |
 | `-b` | Open full Wikipedia article in default browser. |
 | `--browser browser` | Open full Wikipedia article in specific `browser`. |
-| `-d` | Open disambiguation page in browser. |
+| `-d` | Open disambiguation CLI menu. |
+| `-D` | Open disambiguation page in browser. |
 
 ### Output
 
