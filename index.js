@@ -136,41 +136,44 @@ function printWikiSummary() {
     if (res) {
       res = res.text['*'].split('\n');
 
-      let startIndex = 0;
-      let endIndex = res.length - 1;
+      // Find summary text (text above the TOC that isn't a note)
+      let summaryLines = [];
+      let inSummary = false;
       for (let i=0; i < res.length; i++) {
-        if (res[i].startsWith('<div class="mw-parser-output')) {
-          startIndex = i + 1;
-        } else if (res[i].startsWith('<div id="toc') || res[i].startsWith('<div class="toc')) {
-          endIndex = i - 1;
+        let line = res[i];
+
+        if (inSummary && line.includes('="toc')) {
           break;
         }
-      }
 
-      let shortRes = [];
-      for (let i = startIndex; i < endIndex; i++) {
-        if (res[i].startsWith('<p>')) {
-          shortRes.push(res[i]);
+        if (line.toLowerCase().includes('<b>', query.toLowerCase)) {
+          inSummary = true;
+        }
+
+        if (inSummary) {
+          summaryLines.push(line);
         }
       }
 
-      shortRes = shortRes.join('\n');
+      let output = summaryLines.join('\n');
 
-      shortRes = shortRes.replace(/<(?:.|\n)*?>/g, '') // remove HTML tags
-                         .replace(/&#[0-9]*;/g, '') // remove HTML ascii codes TODO encode them instead
-                         .replace(/\(listen\)/g, '') // remove 'listen' button text
-                         .replace(/\[[0-9]*\]|\[note [0-9]*\]/g, '') // remove citation numbers
+      output = require('html2plaintext')(output)
+        .replace(/\[[0-9a-z]*\]|\[note [0-9a-z]*\]/g, '') // remove citation text
+        .replace(/listen\)/g, ''); // remove 'listen' button text
 
-      if (shortRes.includes('may refer to:')) {
+      // Check if output is summary
+      if (output.includes('may refer to:')) {
         console.log('Ambiguous results, opening in browser...');
         openInBrowser();
-      } else if (shortRes.trim() == '') {
-        console.log('Error: no output\nOpening in browser...');
+      } else if (output.trim() == '') {
+        console.log('Error, opening in browser...');
         openInBrowser();
       }
 
-      console.log(lineWrap(shortRes, _lineLength));
-    } else {
+      // Output summary text
+      console.log(lineWrap(output, _lineLength));
+
+    } else { // No response
       console.log('Not found :^(');
     }
   });
