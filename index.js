@@ -209,16 +209,20 @@ function printWikiSummary(queryText) {
           })
       }
 
+      // Browser fallback if output is empty
       else if (output.trim() == '') {
-        console.log('Something went wrong, opening in browser...');
+        console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${query}")`);
+        console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
         openInBrowser();
       }
 
-      else { // Output summary text
+      // Output summary text
+      else {
         console.log(lineWrap(output, _lineLength));
       }
 
-    } else { // No response
+    // No response
+    } else {
       console.log('Not found :^(');
     }
   });
