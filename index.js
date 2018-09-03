@@ -139,6 +139,7 @@ function printWikiSummary() {
       // Find summary text (text above the TOC that isn't a note)
       let summaryLines = [];
       let inSummary = false;
+      let inTable = false;
       for (let i=0; i < res.length; i++) {
         let line = res[i];
 
@@ -146,11 +147,14 @@ function printWikiSummary() {
           break;
         }
 
+        if (line.includes('<tr')) inTable = true;
+        if (inTable && line.includes('</tr')) inTable = false;
+
         if (line.toLowerCase().includes('<b>', query.toLowerCase)) {
           inSummary = true;
         }
 
-        if (inSummary) {
+        if (inSummary && !inTable) {
           summaryLines.push(line);
         }
       }
