@@ -7,7 +7,7 @@ const path = require('path'),
 
 const conf = new Configstore(pkg.name, { lang: 'en' });
 
-let args = process.argv.slice(2, process.argv.length);
+let args = process.argv.slice(2);
 
 // If no arguments, print usage and exit
 if (args.length == 0) {
@@ -26,7 +26,9 @@ Flags can be placed anywhere.
 
     --browser <BROWSER>  Open article in specific BROWSER
 
-    -d                   Open disambiguation page in browser
+    -d                   Open disambiguation CLI menu
+
+    -D                   Open disambiguation page in browser
 
     -line <NUM>          Set line wrap length to NUM (minimum 15)
 
@@ -60,17 +62,20 @@ if (_lineLength > 80) {
 for (let i=0; i < args.length; i++) {
   if (args[i].startsWith('-')) {
     switch(args[i]) {
+      // Open in default browser
       case '-b':
         _openInBrowser = true;
         args.splice(i, 1); // remove flag from args array
         break;
 
+      // Open in specific browser
       case '--browser':
         _openInBrowser = true;
         _browser = args[i + 1];
         args.splice(i, 2);
         break;
 
+      // Specify line length
       case '-line':
         let newLength = parseInt(args[i + 1]);
         if (newLength) {
@@ -85,6 +90,7 @@ for (let i=0; i < args.length; i++) {
         }
         break;
 
+      // Specify language
       case '-l':
       case '-lang':
         let validLang = false;
@@ -106,7 +112,15 @@ for (let i=0; i < args.length; i++) {
         args.splice(i, 2); // remove flag and value
         break;
 
+      // Open disambiguation CLI menu
       case '-d':
+        args.splice(i, 1);
+        args.push('(disambiguation)');
+        _openInBrowser = false;
+        break;
+
+      // Open disambiguation page in browser
+      case '-D':
         args.splice(i, 1); // remove flag
         args.push('(disambiguation)');
         _openInBrowser = true;
