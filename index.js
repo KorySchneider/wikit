@@ -147,10 +147,10 @@ function printWikiSummary() {
           break;
         }
 
-        if (line.includes('<tr')) inTable = true;
-        if (inTable && line.includes('</tr')) inTable = false;
+        if (line.includes('<table')) inTable = true;
+        if (inTable && line.includes('</table')) inTable = false;
 
-        if (line.toLowerCase().includes('<b>', query.toLowerCase)) {
+        if (line.toLowerCase().includes('<b>', query.toLowerCase) && !inTable) {
           inSummary = true;
         }
 
