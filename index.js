@@ -190,7 +190,7 @@ function printWikiSummary(queryText) {
               let link = line.slice(line.indexOf('/wiki/') + 6);
               link = link.split('');
               link = link.splice(0, link.indexOf('"'));
-              link = link.join('');
+              link = decodeURIComponent(link.join(''));
               links[h2p(line)] = link;
             }
           }
