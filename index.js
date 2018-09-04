@@ -164,7 +164,7 @@ function printWikiSummary(queryText) {
         if (line.includes('<table')) inTable = true;
         if (inTable && line.includes('</table')) inTable = false;
 
-        if (line.toLowerCase().includes('<b>', query.toLowerCase) && !inTable) {
+        if (line.toLowerCase().includes('<b>') && line.toLowerCase().includes(query.toLowerCase()) && !inTable) {
           inSummary = true;
         }
 
