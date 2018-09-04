@@ -168,7 +168,9 @@ function printWikiSummary(queryText) {
           inSummary = true;
         }
 
-        if (inSummary && !inTable && !line.startsWith('<td')) {
+        if (inSummary && !inTable
+                      && !line.startsWith('<td', '<table', '<a')
+                      && !line.includes('needs additional citations')) {
           summaryLines.push(line);
         }
       }
