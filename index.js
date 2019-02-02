@@ -170,7 +170,11 @@ function printWikiSummary(queryText) {
 
         if (inSummary && !inTable
                       && !line.startsWith('<td', '<table', '<a')
-                      && !line.includes('needs additional citations')) {
+                      && !line.includes('needs additional citations')
+                      && !line.includes('box-Notability')
+                      && !line.includes('mw-cite-backlink')
+                      && !line.includes('id="References"')
+                      && !line.includes('Wikipedia:Stub')) {
           summaryLines.push(line);
         }
       }
