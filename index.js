@@ -232,10 +232,9 @@ function printWikiSummary(queryText) {
   });
 }
 
-function lineWrap(txt, max) {
+function lineWrap(text, max) {
+  text = text.trim().replace(/\n/g, ' '); // replace newlines with spaces
   let formattedText = ' ';
-  let text = txt.trim();
-  text = text.replace(/\n/g, ' '); // replace newlines with spaces
 
   while (text.length > max) {
     let nextSpaceIndex = -1;
