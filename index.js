@@ -179,7 +179,7 @@ function printWikiSummary(queryText) {
 
       let output = summaryLines.join('\n');
 
-      output = h2p(output)
+      output = h2p(output) // HTML to plaintext
         .replace(/\[[0-9a-z]*\]|\[note [0-9a-z]*\]/g, '') // remove citation text
         .replace(/listen\)/g, ''); // remove 'listen' button text
 
