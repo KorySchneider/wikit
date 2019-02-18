@@ -157,9 +157,7 @@ function printWikiSummary(queryText) {
       for (let i=0; i < res.length; i++) {
         let line = res[i];
 
-        if (inSummary && line.includes('="toc')) {
-          break;
-        }
+        if (inSummary && line.includes('="toc')) break;
 
         if (line.includes('<table')) inTable = true;
         if (inTable && line.includes('</table')) inTable = false;
