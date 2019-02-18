@@ -154,10 +154,16 @@ function printWikiSummary(queryText) {
       let summaryLines = [];
       let inSummary = false;
       let inTable = false;
+      let ambiguousResults = false;
       for (let i=0; i < res.length; i++) {
         let line = res[i];
 
         if (inSummary && line.includes('="toc')) break;
+
+        if (line.includes('may', 'refer to:')) {
+          ambiguousResults = true;
+          break;
+        }
 
         if (line.includes('<table')) inTable = true;
         if (inTable && line.includes('</table')) inTable = false;
@@ -184,7 +190,7 @@ function printWikiSummary(queryText) {
         .replace(/listen\)/g, ''); // remove 'listen' button text
 
       // Handle ambiguous results
-      if (output.includes('may refer to:')) {
+      if (ambiguousResults) {
         let links = {}; // Line text : link text
         for (let i=0; i < res.length; i++) {
           let line = res[i].trim();
