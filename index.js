@@ -65,7 +65,6 @@ for (let i=0; i < args.length; i++) {
       // Open in default browser
       case '-b':
         _openInBrowser = true;
-        args.splice(i, 1); // remove flag from args array
         break;
 
       // Open in specific browser
@@ -109,19 +108,16 @@ for (let i=0; i < args.length; i++) {
           process.exit(-1);
         }
 
-        args.splice(i, 2); // remove flag and value
         break;
 
       // Open disambiguation CLI menu
       case '-d':
-        args.splice(i, 1);
         args.push('(disambiguation)');
         _openInBrowser = false;
         break;
 
       // Open disambiguation page in browser
       case '-D':
-        args.splice(i, 1); // remove flag
         args.push('(disambiguation)');
         _openInBrowser = true;
         break;
@@ -129,7 +125,13 @@ for (let i=0; i < args.length; i++) {
   }
 }
 
-const query = args.join(' ').trim();
+// Manually excluding command-line options from query
+let query = args.join(' ').trim();
+query = query.replace('-b','');
+query = query.replace(/-l [a-z]{2}/,'');
+query = query.replace(/-lang [a-z]{2}/,'');
+query = query.replace(/-d/i,'');
+
 if (query === '') {
   console.log('Please enter a search query');
   process.exit(-1);
@@ -266,9 +268,10 @@ function lineWrap(text, max) {
 function openInBrowser() {
   const opn = require('opn');
   const format = (s) => s.trim().replace(/ /g, '+'); // replace spaces with +'s
-  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search=';
+  let url = 'https://' + _lang + '.wikipedia.org/w/index.php?title=Special:Search&search=';
+  
   url += format(query);
-
+  console.log("URL: " + url);
   if (_browser)
     opn(url, { app: _browser });
   else
