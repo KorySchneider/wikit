@@ -31,7 +31,7 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 
 `$ wikit linux -b`
 
-`$ wikit -lang es jugo`
+`$ wikit --lang es jugo`
 
 ### Flags
 
