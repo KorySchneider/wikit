@@ -266,7 +266,7 @@ function lineWrap(text, max) {
 function openInBrowser() {
   const opn = require('opn');
   const format = (s) => s.trim().replace(/ /g, '+'); // replace spaces with +'s
-  let url = 'https://wikipedia.org/w/index.php?title=Special:Search&search=';
+  let url = `https://${_lang}.wikipedia.org/w/index.php?title=Special:Search&search=`;
   url += format(query);
 
   if (_browser)
