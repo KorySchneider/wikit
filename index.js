@@ -7,10 +7,10 @@ const path = require('path'),
 
 const conf = new Configstore(pkg.name, { lang: 'en' });
 
-let args = process.argv.slice(2);
+const argv = require('minimist')(process.argv.slice(2));
 
 // If no arguments, print usage and exit
-if (args.length == 0) {
+if (argv._.length == 0) {
   console.log(`\
 Usage: $ wikit <query> [-flags]
 
@@ -19,10 +19,10 @@ Flags can be placed anywhere.
 
   Flags:
 
-    -lang <LANG>         Specify language;
+    --lang <LANG>         Specify language;
     -l <LANG>            LANG is an HTML ISO language code
 
-    -b                   Open Wikipedia article in browser
+    -b                   Open Wikipedia article in default browser
 
     --browser <BROWSER>  Open article in specific BROWSER
 
@@ -30,7 +30,7 @@ Flags can be placed anywhere.
 
     -D                   Open disambiguation page in browser
 
-    -line <NUM>          Set line wrap length to NUM (minimum 15)
+    --line <NUM>          Set line wrap length to NUM (minimum 15)
 
   Examples:
 
@@ -40,7 +40,7 @@ Flags can be placed anywhere.
 
     $ wikit linux -b
 
-    $ wikit -lang es jugo`);
+    $ wikit --lang es jugo`);
 
   process.exit(-1);
 }
@@ -50,6 +50,7 @@ let _openInBrowser = false;
 let _browser = null;
 let _lineLength = process.stdout.columns - 10; // Terminal width - 10
 let _lang = conf.get('lang');
+let _disambig = false;
 
 if (_lineLength > 80) {
   // Keep it nice to read in large terminal windows
@@ -59,81 +60,23 @@ if (_lineLength > 80) {
 }
 
 // Parse flags
-for (let i=0; i < args.length; i++) {
-  if (args[i].startsWith('-')) {
-    switch(args[i]) {
-      // Open in default browser
-      case '-b':
-        _openInBrowser = true;
-        args.splice(i, 1); // remove flag from args array
-        break;
-
-      // Open in specific browser
-      case '--browser':
-        _openInBrowser = true;
-        _browser = args[i + 1];
-        args.splice(i, 2);
-        break;
-
-      // Specify line length
-      case '-line':
-        let newLength = parseInt(args[i + 1]);
-        if (newLength) {
-          _lineLength = newLength;
-          if (_lineLength < 15) {
-            _lineLength = 15; // things break if length is less than 15
-          }
-          args.splice(i, 2); // remove flag and value
-        } else {
-          console.log(`Invalid line length: ${args[i + 1]}`);
-          process.exit(-1);
-        }
-        break;
-
-      // Specify language
-      case '-l':
-      case '-lang':
-        let validLang = false;
-        let languages = JSON.parse(
-          require('fs').readFileSync(path.join(__dirname, 'data/languages.json'))
-        );
-
-        Object.keys(languages).forEach(l => {
-          if (l == args[i + 1]) validLang = true;
-        });
-
-        if (validLang) {
-          _lang = args[i + 1];
-        } else {
-          console.log(`Invalid language: ${args[i + 1]}\nPlease use a two-character language code, e.g. 'en' for English.`);
-          process.exit(-1);
-        }
-
-        args.splice(i, 2); // remove flag and value
-        break;
-
-      // Open disambiguation CLI menu
-      case '-d':
-        args.splice(i, 1);
-        args.push('(disambiguation)');
-        _openInBrowser = false;
-        break;
-
-      // Open disambiguation page in browser
-      case '-D':
-        args.splice(i, 1); // remove flag
-        args.push('(disambiguation)');
-        _openInBrowser = true;
-        break;
-    }
-  }
+if (argv.b) _openInBrowser = true;
+if (argv.browser) _browser = argv.browser;
+if (argv.lang) _lang = argv.lang;
+if (argv.l) _lang = argv.l;
+if (argv.d) {
+  _openInBrowser = false;
+  _disambig = true;
 }
-
-const query = args.join(' ').trim();
-if (query === '') {
-  console.log('Please enter a search query');
-  process.exit(-1);
+if (argv.D) {
+  _openInBrowser = true;
+  _disambig = true;
 }
+if (argv.line) _lineLength = argv.line;
+
+// Format query
+let query = argv._.join(' ').trim();
+if (_disambig) query += ' disambiguation';
 
 // Execute
 if (_openInBrowser) openInBrowser();
