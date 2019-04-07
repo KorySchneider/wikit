@@ -82,7 +82,14 @@ if (argv.D) {
   _openInBrowser = true;
   _disambig = true;
 }
-if (argv.line) _lineLength = argv.line;
+if (argv.line) {
+  if (parseInt(argv.line) > 0) {
+    _lineLength = parseInt(argv.line);
+  } else {
+    console.log(`Invalid line length: ${argv.line}`);
+    process.exit(-1);
+  }
+}
 
 // Format query
 let query = argv._.join(' ').trim();
