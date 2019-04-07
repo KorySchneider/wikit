@@ -60,10 +60,15 @@ if (_lineLength > 80) {
 }
 
 // Parse flags
-if (argv.b) _openInBrowser = true;
-if (argv.browser) _browser = argv.browser;
 if (argv.lang) _lang = argv.lang;
 if (argv.l) _lang = argv.l;
+if (argv.b) {
+  _openInBrowser = true;
+}
+if (argv.browser) {
+  _openInBrowser = true;
+  _browser = argv.browser;
+}
 if (argv.d) {
   _openInBrowser = false;
   _disambig = true;
