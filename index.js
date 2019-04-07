@@ -233,8 +233,6 @@ function openInBrowser() {
     opn(url, { app: _browser });
   else
     opn(url);
-
-  process.exit(0);
 }
 
 function validLanguageCode(code) {
