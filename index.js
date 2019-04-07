@@ -60,14 +60,19 @@ if (_lineLength > 80) {
 }
 
 // Parse flags
-if (argv.lang) _lang = argv.lang;
-if (argv.l) _lang = argv.l;
 if (argv.b) {
   _openInBrowser = true;
 }
 if (argv.browser) {
   _openInBrowser = true;
   _browser = argv.browser;
+}
+if (argv.lang || argv.l) {
+  _lang = argv.lang || argv.l;
+  if (!validLanguageCode(_lang)) {
+    console.log(`Unrecognized language code: ${_lang}`);
+    process.exit(-1);
+  }
 }
 if (argv.d) {
   _openInBrowser = false;
@@ -223,4 +228,14 @@ function openInBrowser() {
     opn(url);
 
   process.exit(0);
+}
+
+function validLanguageCode(code) {
+  const languages = JSON.parse(require('fs').readFileSync(
+    path.join(__dirname, 'data/languages.json')
+  ));
+  Object.keys(languages).forEach(lang => {
+    if (lang === code) return true;
+  });
+  return false;
 }
