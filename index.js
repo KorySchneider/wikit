@@ -91,7 +91,7 @@ function printWikiSummary(queryText) {
         if (line.includes('<table')) inTable = true;
         if (inTable && line.includes('</table')) inTable = false;
 
-        if (line.toLowerCase().includes('<b>') && line.toLowerCase().includes(query.toLowerCase()) && !inTable) {
+        if (line.includes('<b>') && line.toLowerCase().includes(queryText.toLowerCase()) && !inTable) {
           inSummary = true;
         }
 
@@ -134,7 +134,7 @@ function printWikiSummary(queryText) {
           .prompt([
             { type: 'list',
               name: 'selection',
-              message: `Ambiguous results, "${query}" may refer to:`,
+              message: `Ambiguous results, "${queryText}" may refer to:`,
               choices: Object.keys(links) }
           ])
           .then(answers => {
@@ -144,7 +144,7 @@ function printWikiSummary(queryText) {
 
       // Browser fallback if output is empty
       else if (output.trim() == '') {
-        console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${query}")`);
+        console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
         openInBrowser();
       }
