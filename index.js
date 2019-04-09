@@ -138,7 +138,8 @@ function printWikiSummary(queryText) {
               choices: Object.keys(links) }
           ])
           .then(answers => {
-            printWikiSummary(links[answers.selection]);
+            console.clear();
+            printWikiSummary(links[answers.selection].replace(/_/, ' '));
           })
       }
 
