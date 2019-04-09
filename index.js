@@ -34,7 +34,7 @@ if (argv.lang || argv.l) {
   _lang = argv.lang || argv.l;
   if (!validLanguageCode(_lang)) {
     console.log(`Unrecognized language code: ${_lang}`);
-    process.exit(-1);
+    process.exit(1);
   }
 }
 if (argv.d) {
@@ -50,7 +50,7 @@ if (argv.line) {
     _lineLength = parseInt(argv.line);
   } else {
     console.log(`Invalid line length: ${argv.line}`);
-    process.exit(-1);
+    process.exit(1);
   }
 }
 
@@ -241,5 +241,5 @@ Flags can be placed anywhere.
 
     $ wikit --lang es jugo`);
 
-  process.exit(-1);
+  process.exit(1);
 }
