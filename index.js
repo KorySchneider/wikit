@@ -56,7 +56,7 @@ if (argv.line) {
 
 // Format query
 let query = argv._.join(' ').trim();
-if (_disambig) query += ' disambiguation';
+if (_disambig) query += ' (disambiguation)';
 
 // Execute
 if (_openInBrowser) openInBrowser();
