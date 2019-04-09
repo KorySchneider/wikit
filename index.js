@@ -19,12 +19,8 @@ let _lineLength = process.stdout.columns - 10; // Terminal width - 10
 let _lang = conf.get('lang');
 let _disambig = false;
 
-if (_lineLength > 80) {
-  // Keep it nice to read in large terminal windows
-  _lineLength = 80;
-} else if (_lineLength < 15) {
-  _lineLength = 15;
-}
+// Maintain comfortable line length
+if (_lineLength > 80) _lineLength = 80;
 
 // Parse flags
 if (argv.b) {
