@@ -10,40 +10,7 @@ const conf = new Configstore(pkg.name, { lang: 'en' });
 const argv = require('minimist')(process.argv.slice(2));
 
 // If no arguments, print usage and exit
-if (argv._.length == 0) {
-  console.log(`\
-Usage: $ wikit <query> [-flags]
-
-Quotes are not required for multi-word queries.
-Flags can be placed anywhere.
-
-  Flags:
-
-    --lang <LANG>         Specify language;
-    -l <LANG>            LANG is an HTML ISO language code
-
-    -b                   Open Wikipedia article in default browser
-
-    --browser <BROWSER>  Open article in specific BROWSER
-
-    -d                   Open disambiguation CLI menu
-
-    -D                   Open disambiguation page in browser
-
-    --line <NUM>          Set line wrap length to NUM (minimum 15)
-
-  Examples:
-
-    $ wikit nodejs
-
-    $ wikit empire state building
-
-    $ wikit linux -b
-
-    $ wikit --lang es jugo`);
-
-  process.exit(-1);
-}
+if (argv._.length == 0) printUsageAndExit();
 
 // Flags
 let _openInBrowser = false;
@@ -243,4 +210,39 @@ function validLanguageCode(code) {
     if (lang === code) return true;
   });
   return false;
+}
+
+function printUsageAndExit() {
+  console.log(`\
+Usage: $ wikit <query> [-flags]
+
+Quotes are not required for multi-word queries.
+Flags can be placed anywhere.
+
+  Flags:
+
+    --lang <LANG>        Specify language;
+    -l <LANG>            LANG is an HTML ISO language code
+
+    -b                   Open Wikipedia article in default browser
+
+    --browser <BROWSER>  Open article in specific BROWSER
+
+    -d                   Open disambiguation CLI menu
+
+    -D                   Open disambiguation page in browser
+
+    --line <NUM>         Set line wrap length to NUM (minimum 15)
+
+  Examples:
+
+    $ wikit nodejs
+
+    $ wikit empire state building
+
+    $ wikit linux -b
+
+    $ wikit --lang es jugo`);
+
+  process.exit(-1);
 }
