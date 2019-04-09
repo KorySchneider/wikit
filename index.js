@@ -83,7 +83,7 @@ function printWikiSummary(queryText) {
 
         if (inSummary && line.includes('="toc')) break;
 
-        if (line.includes('may', 'refer to:')) {
+        if (line.includes('may') && line.includes('refer to:')) {
           ambiguousResults = true;
           break;
         }
