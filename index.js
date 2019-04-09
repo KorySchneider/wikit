@@ -9,7 +9,9 @@ const conf = new Configstore(pkg.name, { lang: 'en' });
 
 const argv = require('minimist')(process.argv.slice(2));
 
-// If no arguments, print usage and exit
+// Print version if requested
+if (argv.version || argv.v) printVersionAndExit();
+// If no query, print usage and exit
 if (argv._.length == 0) printUsageAndExit();
 
 // Flags
@@ -231,6 +233,8 @@ Flags can be placed anywhere.
 
     --line <NUM>         Set line wrap length to NUM (minimum 15)
 
+    --version / -v       Print installed version number
+
   Examples:
 
     $ wikit nodejs
@@ -242,4 +246,10 @@ Flags can be placed anywhere.
     $ wikit --lang es jugo`);
 
   process.exit(1);
+}
+
+function printVersionAndExit() {
+  const { version } = require('./package.json');
+  console.log(version);
+  process.exit(0);
 }

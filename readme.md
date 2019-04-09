@@ -43,6 +43,7 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 | `--browser browser` | Open full Wikipedia article in specific `browser` |
 | `-d` | Open disambiguation CLI menu |
 | `-D` | Open disambiguation page in browser |
+| `--version`<br>`-v` | Print installed version number |
 
 ### Output
 
