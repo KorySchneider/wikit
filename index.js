@@ -68,7 +68,7 @@ let query = argv._.join(' ').trim();
 if (_disambig) query += ' (disambiguation)';
 
 // Execute
-if (_openInBrowser) openInBrowser();
+if (_openInBrowser) openInBrowser(query);
 else printWikiSummary(query);
 
 // ===== Functions =====
@@ -130,7 +130,7 @@ function printWikiSummary(queryText) {
       else if (output.trim() == '') {
         console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
-        openInBrowser();
+        openInBrowser(queryText);
       }
 
       // Output summary text
@@ -170,7 +170,7 @@ function lineWrap(text, max) {
   return formattedText;
 }
 
-function openInBrowser() {
+function openInBrowser(query) {
   const format = (s) => s.trim().replace(/ /g, '+'); // replace spaces with +'s
   let url = `https://${_lang}.wikipedia.org/w/index.php?title=Special:Search&search=`;
   url += format(query);
