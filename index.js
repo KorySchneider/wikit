@@ -1,15 +1,20 @@
 #!/usr/bin/env node
 'use strict';
 
-const path = require('path'),
-      Configstore = require('configstore'),
-      pkg = require(path.join(__dirname, '/package.json'));
+const path = require('path');
+const fs = require('fs');
 
+const wiki = require('node-wikipedia')
+const h2p = require('html2plaintext');
+const inquirer = require('inquirer');
+const ora = require('ora');
+const opn = require('opn');
+
+const Configstore = require('configstore');
+const pkg = require(path.join(__dirname, '/package.json'));
 const conf = new Configstore(pkg.name, { lang: 'en' });
 
 const argv = require('minimist')(process.argv.slice(2));
-
-const h2p = require('html2plaintext');
 
 // Print version if requested
 if (argv.version || argv.v) printVersionAndExit();
@@ -69,9 +74,9 @@ else printWikiSummary(query);
 // ===== Functions =====
 
 function printWikiSummary(queryText) {
-  let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
+  let spinner = ora({ text: 'Searching...', spinner: 'dots4' }).start();
 
-  require('node-wikipedia').page.data(queryText, { content: true, lang: _lang }, (res) => {
+  wiki.page.data(queryText, { content: true, lang: _lang }, (res) => {
     spinner.stop();
     if (res) {
       res = res.text['*'].split('\n');
@@ -166,7 +171,6 @@ function lineWrap(text, max) {
 }
 
 function openInBrowser() {
-  const opn = require('opn');
   const format = (s) => s.trim().replace(/ /g, '+'); // replace spaces with +'s
   let url = `https://${_lang}.wikipedia.org/w/index.php?title=Special:Search&search=`;
   url += format(query);
@@ -178,7 +182,7 @@ function openInBrowser() {
 }
 
 function validLanguageCode(code) {
-  const languages = JSON.parse(require('fs').readFileSync(
+  const languages = JSON.parse(fs.readFileSync(
     path.join(__dirname, 'data/languages.json')
   ));
   Object.keys(languages).forEach(lang => {
@@ -255,7 +259,7 @@ function handleAmbiguousResults(res, queryText) {
   }
 
   // Prompt user
-  require('inquirer')
+  inquirer
     .prompt([
       { type: 'list',
         name: 'selection',
