@@ -119,14 +119,19 @@ function printWikiSummary(queryText) {
         let links = {}; // Line text : link text
         for (let i=0; i < res.length; i++) {
           let line = res[i].trim();
-          if (line.startsWith('<li>')) {
+          if (line.includes('<li')) {
             let linkIndex = line.indexOf('/wiki/');
             if (linkIndex > -1) {
               let link = line.slice(line.indexOf('/wiki/') + 6);
               link = link.split('');
               link = link.splice(0, link.indexOf('"'));
               link = decodeURIComponent(link.join(''));
-              links[h2p(line)] = link;
+              let lineText = h2p(line);
+              if (lineText.startsWith('-')) // Remove leading dash
+                lineText = lineText.slice(2, lineText.length);
+              if (lineText.endsWith(':')) // Remove trailing colon
+                lineText = lineText.slice(0, lineText.length - 1);
+              links[lineText] = link;
             }
           }
         }
