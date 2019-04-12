@@ -9,6 +9,8 @@ const conf = new Configstore(pkg.name, { lang: 'en' });
 
 const argv = require('minimist')(process.argv.slice(2));
 
+const h2p = require('html2plaintext');
+
 // Print version if requested
 if (argv.version || argv.v) printVersionAndExit();
 // If no query, print usage and exit
@@ -68,7 +70,6 @@ else printWikiSummary(query);
 
 function printWikiSummary(queryText) {
   let spinner = require('ora')({ text: 'Searching...', spinner: 'dots4' }).start();
-  const h2p = require('html2plaintext');
 
   require('node-wikipedia').page.data(queryText, { content: true, lang: _lang }, (res) => {
     spinner.stop();
@@ -116,38 +117,8 @@ function printWikiSummary(queryText) {
 
       // Handle ambiguous results
       if (ambiguousResults) {
-        let links = {}; // Line text : link text
-        for (let i=0; i < res.length; i++) {
-          let line = res[i].trim();
-          if (line.includes('<li')) {
-            let linkIndex = line.indexOf('/wiki/');
-            if (linkIndex > -1) {
-              let link = line.slice(line.indexOf('/wiki/') + 6);
-              link = link.split('');
-              link = link.splice(0, link.indexOf('"'));
-              link = decodeURIComponent(link.join(''));
-              let lineText = h2p(line);
-              if (lineText.startsWith('-')) // Remove leading dash
-                lineText = lineText.slice(2, lineText.length);
-              if (lineText.endsWith(':')) // Remove trailing colon
-                lineText = lineText.slice(0, lineText.length - 1);
-              links[lineText] = link;
-            }
-          }
-        }
-
-        // Prompt user
-        require('inquirer')
-          .prompt([
-            { type: 'list',
-              name: 'selection',
-              message: `Ambiguous results, "${queryText}" may refer to:`,
-              choices: Object.keys(links) }
-          ])
-          .then(answers => {
-            console.clear();
-            printWikiSummary(links[answers.selection].replace(/_/, ' '));
-          })
+        handleAmbiguousResults(res, queryText);
+        return;
       }
 
       // Browser fallback if output is empty
@@ -257,4 +228,43 @@ function printVersionAndExit() {
   const { version } = require('./package.json');
   console.log(version);
   process.exit(0);
+}
+
+function handleAmbiguousResults(res, queryText) {
+  // Parse links
+  let links = {}; // Line text : link text
+  for (let i=0; i < res.length; i++) {
+    let line = res[i].trim();
+    if (line.includes('<li')) {
+      let linkIndex = line.indexOf('/wiki/');
+      if (linkIndex > -1) {
+        let link = line.slice(line.indexOf('/wiki/') + 6);
+        link = link.split('');
+        link = link.splice(0, link.indexOf('"'));
+        link = decodeURIComponent(link.join(''));
+        link.replace(/_/, ' ');
+
+        let lineText = h2p(line);
+        if (lineText.startsWith('-')) // Remove leading dash
+          lineText = lineText.slice(2, lineText.length);
+        if (lineText.endsWith(':')) // Remove trailing colon
+          lineText = lineText.slice(0, lineText.length - 1);
+
+        links[lineText] = link;
+      }
+    }
+  }
+
+  // Prompt user
+  require('inquirer')
+    .prompt([
+      { type: 'list',
+        name: 'selection',
+        message: `Ambiguous results, "${queryText}" may refer to:`,
+        choices: Object.keys(links) }
+    ])
+    .then(answers => {
+      console.clear();
+      printWikiSummary(links[answers.selection]);
+    })
 }
