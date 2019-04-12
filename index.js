@@ -76,6 +76,8 @@ else printWikiSummary(query);
 function printWikiSummary(queryText) {
   let spinner = ora({ text: 'Searching...', spinner: 'dots4' }).start();
 
+  queryText = queryText.replace(/_/g, ' ');
+
   wiki.page.data(queryText, { content: true, lang: _lang }, (res) => {
     spinner.stop();
     if (res) {
@@ -245,7 +247,7 @@ function handleAmbiguousResults(res, queryText) {
         link = link.split('');
         link = link.splice(0, link.indexOf('"'));
         link = decodeURIComponent(link.join(''));
-        link.replace(/_/, ' ');
+        link.replace(/_/g, ' ');
 
         let lineText = h2p(line);
         if (lineText.startsWith('-')) // Remove leading dash
