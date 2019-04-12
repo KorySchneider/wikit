@@ -225,8 +225,7 @@ Flags can be placed anywhere.
 }
 
 function printVersionAndExit() {
-  const { version } = require('./package.json');
-  console.log(version);
+  console.log(pkg.version);
   process.exit(0);
 }
 
