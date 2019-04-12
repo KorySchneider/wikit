@@ -127,7 +127,7 @@ function printWikiSummary(queryText) {
       }
 
       // Browser fallback if output is empty
-      else if (output.trim() == '') {
+      else if (output.trim() == '' || output.startsWith('Further reading')) {
         console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
         openInBrowser(queryText);
