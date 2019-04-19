@@ -47,12 +47,12 @@ if (argv.lang || argv.l) {
   }
 }
 if (argv.d) {
-  _openInBrowser = false;
   _disambig = true;
+  _openInBrowser = false;
 }
 if (argv.D) {
-  _openInBrowser = true;
   _disambig = true;
+  _openInBrowser = true;
 }
 if (argv.line) {
   if (parseInt(argv.line) > 0) {
