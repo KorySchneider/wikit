@@ -13,7 +13,7 @@ A command line program for getting Wikipedia summaries easily.
 
 ## Installation
 
-`$ npm install wikit -g`
+`$ npm i wikit -g`
 
 ## Usage
 
