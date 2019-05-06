@@ -8,7 +8,7 @@ A command line program for getting Wikipedia summaries easily.
    - [Flags](#flags)
    - [Output](#output)
  - [Bugs & Suggestions](#bugs-and-suggestions)
- - [Support Development - Buy Me A Coffee](#buy-me-a-coffee)
+ - [Support Development - Buy Me A Coffee](#support-development)
 
 
 ## Installation
