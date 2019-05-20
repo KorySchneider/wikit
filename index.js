@@ -136,7 +136,7 @@ function lineWrap(text, max) {
   for (let line of lines) {
     if (line.length > max) {
       while (line.length > max) {
-        output += line.slice(0, max);
+        output += line.slice(0, max) + '\n';
         line = line.slice(max, line.length);
       }
     }
