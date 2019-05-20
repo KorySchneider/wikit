@@ -170,9 +170,7 @@ function validLanguageCode(code) {
   const languages = JSON.parse(fs.readFileSync(
     path.join(__dirname, 'data/languages.json')
   ));
-  Object.keys(languages).forEach(lang => {
-    if (lang === code) return true;
-  });
+  if (Object.keys(languages).includes(code)) return true;
   return false;
 }
 
