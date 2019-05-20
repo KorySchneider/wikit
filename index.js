@@ -4,8 +4,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const wiki = require('node-wikipedia')
-const h2p = require('html2plaintext');
+const wiki = require('wtf_wikipedia');
 const inquirer = require('inquirer');
 const ora = require('ora');
 const opn = require('opn');
@@ -78,69 +77,30 @@ function printWikiSummary(queryText) {
 
   queryText = queryText.replace(/_/g, ' ');
 
-  wiki.page.data(queryText, { content: true, lang: _lang }, (res) => {
+  wiki.fetch(queryText, _lang, (err, doc) => {
     spinner.stop();
-    if (res) {
-      res = res.text['*'].split('\n');
 
-      // Find summary text (text above the TOC that isn't a note)
-      let summaryLines = [];
-      let inSummary = false;
-      let inTable = false;
-      let ambiguousResults = false;
-      for (let i=0; i < res.length; i++) {
-        let line = res[i];
+    if (err) {
+      console.log('Error:', err);
+    }
 
-        if (inSummary && line.includes('="toc')) break;
-
-        if (line.includes('may') && line.includes('refer to:')) {
-          ambiguousResults = true;
-          break;
-        }
-
-        if (line.includes('<table')) inTable = true;
-        if (inTable && line.includes('</table')) inTable = false;
-
-        if (line.includes('<b>') && line.toLowerCase().includes(queryText.toLowerCase()) && !inTable) {
-          inSummary = true;
-        }
-
-        if (inSummary && !inTable
-                      && !line.startsWith('<td', '<table', '<a')
-                      && !line.includes('needs additional citations')
-                      && !line.includes('box-Notability')
-                      && !line.includes('mw-cite-backlink')
-                      && !line.includes('id="References"')
-                      && !line.includes('Wikipedia:Stub')) {
-          summaryLines.push(line);
-        }
-      }
-
-      let output = summaryLines.join('\n');
-
-      output = h2p(output) // HTML to plaintext
-        .replace(/\[[0-9a-z]*\]|\[note [0-9a-z]*\]/g, '') // remove citation text
-        .replace(/listen\)/g, ''); // remove 'listen' button text
+    if (doc) {
+      let summary = doc.sections()[0].text();
 
       // Handle ambiguous results
-      if (ambiguousResults) {
-        handleAmbiguousResults(res, queryText);
+      if (_disambig || summary.includes('may refer to:')) {
+        handleAmbiguousResults(doc, queryText);
         return;
       }
 
-      // Browser fallback if output is empty
-      else if (output.trim() == '' || output.startsWith('Further reading')) {
+      // Output
+      if (summary) {
+        console.log(lineWrap(summary, _lineLength));
+      } else {
         console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
         openInBrowser(queryText);
       }
-
-      // Output summary text
-      else {
-        console.log(lineWrap(output, _lineLength));
-      }
-
-    // No response
     } else {
       console.log('Not found :^(');
     }
