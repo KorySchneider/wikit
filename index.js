@@ -107,6 +107,29 @@ function printWikiSummary(queryText) {
   });
 }
 
+function handleAmbiguousResults(doc, queryText) {
+  const choices = [];
+  doc.sections().forEach(section => {
+    section.links().forEach(link => {
+      if (link.page) choices.push(link.page);
+    });
+  });
+  inquirer.prompt([
+    {
+      name: 'selection',
+      type: 'list',
+      message: `Ambiguous results, "${queryText}" may refer to:`,
+      choices: choices,
+      pageSize: 15,
+    }
+  ]).then(answers => {
+    _disambig = false;
+    printWikiSummary(answers.selection);
+  }).catch(err => {
+    console.log('Error:', err);
+  });
+}
+
 function lineWrap(text, max) {
   text = text.trim().replace(/\n/g, ' '); // replace newlines with spaces
   let formattedText = ' ';
@@ -193,43 +216,4 @@ Flags can be placed anywhere.
 function printVersionAndExit() {
   console.log(pkg.version);
   process.exit(0);
-}
-
-function handleAmbiguousResults(res, queryText) {
-  // Parse links
-  let links = {}; // Line text : link text
-  for (let i=0; i < res.length; i++) {
-    let line = res[i].trim();
-    if (line.includes('<li')) {
-      let linkIndex = line.indexOf('/wiki/');
-      if (linkIndex > -1) {
-        let link = line.slice(line.indexOf('/wiki/') + 6);
-        link = link.split('');
-        link = link.splice(0, link.indexOf('"'));
-        link = decodeURIComponent(link.join(''));
-        link.replace(/_/g, ' ');
-
-        let lineText = h2p(line);
-        if (lineText.startsWith('-')) // Remove leading dash
-          lineText = lineText.slice(2, lineText.length);
-        if (lineText.endsWith(':')) // Remove trailing colon
-          lineText = lineText.slice(0, lineText.length - 1);
-
-        links[lineText] = link;
-      }
-    }
-  }
-
-  // Prompt user
-  inquirer
-    .prompt([
-      { type: 'list',
-        name: 'selection',
-        message: `Ambiguous results, "${queryText}" may refer to:`,
-        choices: Object.keys(links) }
-    ])
-    .then(answers => {
-      console.clear();
-      printWikiSummary(links[answers.selection]);
-    })
 }
