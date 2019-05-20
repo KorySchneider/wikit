@@ -131,28 +131,18 @@ function handleAmbiguousResults(doc, queryText) {
 }
 
 function lineWrap(text, max) {
-  text = text.trim().replace(/\n/g, ' '); // replace newlines with spaces
-  let formattedText = ' ';
-
-  while (text.length > max) {
-    let nextSpaceIndex = -1;
-    for (let i=max; i < text.length; i++) {
-      if (text[i] == ' ') {
-        nextSpaceIndex = i;
-        break;
+  let output = '';
+  let lines = text.split('\n');
+  for (let line of lines) {
+    if (line.length > max) {
+      while (line.length > max) {
+        output += line.slice(0, max);
+        line = line.slice(max, line.length);
       }
     }
-    if (nextSpaceIndex < 0) nextSpaceIndex = max; // No space char was found
-
-    formattedText += text.slice(0, nextSpaceIndex) + '\n';
-    text = text.slice(nextSpaceIndex, text.length);
+    output += line + '\n';
   }
-  // add remaining text
-  formattedText += (text.startsWith(' '))
-    ? text
-    : ' ' + text;
-
-  return formattedText;
+  return output;
 }
 
 function openInBrowser(query) {
