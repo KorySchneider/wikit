@@ -12,7 +12,6 @@
     "configstore": "^3.1.1",
     "inquirer": "^6.2.0",
     "minimist": "^1.2.0",
-    "node-wikipedia": "^0.0.2",
     "opn": "^5.1.0",
     "ora": "^2.1.0",
     "wtf_wikipedia": "^7.3.0"
