@@ -153,6 +153,9 @@ function lineWrap(text, max) {
   formattedText += (text.startsWith(' '))
     ? text
     : ' ' + text;
+  
+  // remove straggling HMTL tags
+  formattedText = formattedText.replace(/<\/?[^>]+(>|$)/g, "");
 
   return formattedText;
 }
