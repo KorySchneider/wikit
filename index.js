@@ -132,6 +132,12 @@ function handleAmbiguousResults(doc, queryText) {
 }
 
 function lineWrap(text, max) {
+  // remove stray html elements
+  text = htmlToText.fromString(text, {
+    wordwrap: false,
+    uppercaseHeadings: false,
+    ignoreHref: true,
+  });
   text = text.trim().replace(/\n\n/g, '\n');
   text = text.trim().replace(/\n/g, ' '); // replace newlines with spaces
   let formattedText = ' ';
@@ -154,11 +160,6 @@ function lineWrap(text, max) {
   formattedText += (text.startsWith(' '))
     ? text
     : ' ' + text;
-
-  // Remove stray html elements
-  formattedText = htmlToText.fromString(formattedText, {
-    wordWrap: _lineLength,
-  });
 
   return formattedText;
 }
