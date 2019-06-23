@@ -157,7 +157,8 @@
   },
   "en":{
     "name":"English",
-    "nativeName":"English"
+    "nativeName":"English",
+    "disambig": "disambiguation"
   },
   "eo":{
     "name":"Esperanto",
@@ -185,7 +186,8 @@
   },
   "fr":{
     "name":"French",
-    "nativeName":"français, langue française"
+    "nativeName":"français, langue française",
+    "disambig": "homonymie"
   },
   "ff":{
     "name":"Fula; Fulah; Pulaar; Pular",
@@ -201,7 +203,8 @@
   },
   "de":{
     "name":"German",
-    "nativeName":"Deutsch"
+    "nativeName":"Deutsch",
+    "disambig": "Begriffskl�rung"
   },
   "el":{
     "name":"Greek, Modern",
@@ -589,7 +592,8 @@
   },
   "es":{
     "name":"Spanish; Castilian",
-    "nativeName":"español, castellano"
+    "nativeName":"español, castellano",
+    "disambig": "desambiguaci�n"
   },
   "su":{
     "name":"Sundanese",
