@@ -8,6 +8,7 @@ const wiki = require('wtf_wikipedia');
 const inquirer = require('inquirer');
 const ora = require('ora');
 const opn = require('opn');
+const htmlToText = require('html-to-text');
 
 const Configstore = require('configstore');
 const pkg = require(path.join(__dirname, '/package.json'));
@@ -153,6 +154,11 @@ function lineWrap(text, max) {
   formattedText += (text.startsWith(' '))
     ? text
     : ' ' + text;
+
+  // Remove stray html elements
+  formattedText = htmlToText.fromString(formattedText, {
+    wordWrap: _lineLength,
+  });
 
   return formattedText;
 }
