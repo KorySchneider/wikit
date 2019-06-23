@@ -14,6 +14,10 @@ const Configstore = require('configstore');
 const pkg = require(path.join(__dirname, '/package.json'));
 const conf = new Configstore(pkg.name, { lang: 'en' });
 
+const languages = JSON.parse(fs.readFileSync(
+  path.join(__dirname, 'data/languages.json')
+));
+
 const argv = require('minimist')(process.argv.slice(2));
 
 // Print version if requested
@@ -65,7 +69,7 @@ if (argv.line) {
 
 // Format query
 let query = argv._.join(' ').trim();
-if (_disambig) query += ' (disambiguation)';
+if (_disambig) query += ` (${getDisambigTranslation(_lang)})`;
 
 // Execute
 if (_openInBrowser) openInBrowser(query);
@@ -89,7 +93,7 @@ function printWikiSummary(queryText) {
       let summary = doc.sections()[0].text();
 
       // Handle ambiguous results
-      if (_disambig || summary.includes('may refer to:')) {
+      if (_disambig || isDisambiguationPage(doc) || summary.includes('may refer to:')) {
         handleAmbiguousResults(doc, queryText);
         return;
       }
@@ -103,12 +107,13 @@ function printWikiSummary(queryText) {
         openInBrowser(queryText);
       }
     } else {
-      console.log('Not found :^(');
+      console.log(`${query} not found :^(`);
     }
   });
 }
 
 function handleAmbiguousResults(doc, queryText) {
+  _disambig = false;
   const choices = [];
   doc.sections().forEach(section => {
     section.links().forEach(link => {
@@ -124,7 +129,6 @@ function handleAmbiguousResults(doc, queryText) {
       pageSize: 15,
     }
   ]).then(answers => {
-    _disambig = false;
     printWikiSummary(answers.selection);
   }).catch(err => {
     console.log('Error:', err);
@@ -176,11 +180,24 @@ function openInBrowser(query) {
 }
 
 function validLanguageCode(code) {
-  const languages = JSON.parse(fs.readFileSync(
-    path.join(__dirname, 'data/languages.json')
-  ));
   if (Object.keys(languages).includes(code)) return true;
   return false;
+}
+
+function isDisambiguationPage(doc) {
+  let disambigPage = false;
+  doc.categories().forEach(category => {
+    if (category.toLowerCase().includes(getDisambigTranslation(_lang).toLowerCase())) {
+      disambigPage = true;
+    }
+  });
+  return disambigPage;
+}
+
+function getDisambigTranslation(lang) {
+  let translation = languages[[lang]].disambig;
+  if (translation) return translation;
+  else return 'disambiguation';
 }
 
 function printUsageAndExit() {
