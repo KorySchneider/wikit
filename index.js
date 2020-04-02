@@ -85,10 +85,7 @@ function printWikiSummary(queryText) {
   wiki.fetch(queryText, _lang, (err, doc) => {
     spinner.stop();
 
-    if (err) {
-      console.log('Error:', err);
-      console.log('Please report errors at https://github.com/koryschneider/wikit/issues/new');
-    }
+    if (err) handleError(err);
 
     if (doc) {
       let summary = doc.sections()[0].text();
@@ -113,7 +110,7 @@ function printWikiSummary(queryText) {
     } else {
       console.log(`${query} not found :^(`);
     }
-  });
+  }).catch(err => handleError(err));
 }
 
 function handleAmbiguousResults(doc, queryText) {
@@ -247,4 +244,9 @@ Flags can be placed anywhere.
 function printVersionAndExit() {
   console.log(pkg.version);
   process.exit(0);
+}
+
+function handleError(error) {
+  console.log('Error:', error);
+  console.log('Please report errors at https://github.com/koryschneider/wikit/issues/new');
 }
