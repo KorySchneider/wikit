@@ -87,6 +87,7 @@ function printWikiSummary(queryText) {
 
     if (err) {
       console.log('Error:', err);
+      console.log('Please report errors at https://github.com/koryschneider/wikit/issues/new');
     }
 
     if (doc) {
@@ -101,6 +102,9 @@ function printWikiSummary(queryText) {
       // Output
       if (summary) {
         console.log(lineWrap(summary, _lineLength));
+        if (argv.link) {
+          console.log(`\n https://${_lang}.wikipedia.org/wiki/${encodeURIComponent(queryText)}`);
+        }
       } else {
         console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
@@ -201,7 +205,7 @@ function getDisambigTranslation(lang) {
 }
 
 function printUsageAndExit() {
-  console.log(`\
+  console.log(`
 Usage: $ wikit <query> [-flags]
 
 Quotes are not required for multi-word queries.
@@ -222,17 +226,20 @@ Flags can be placed anywhere.
 
     --line <NUM>         Set line wrap length to NUM (minimum 15)
 
+    --link               Print a link to the full article after the summary
+
     --version / -v       Print installed version number
 
   Examples:
 
     $ wikit nodejs
 
-    $ wikit empire state building
+    $ wikit empire state building --link
 
     $ wikit linux -b
 
-    $ wikit --lang es jugo`);
+    $ wikit --lang es jugo
+  `);
 
   process.exit(1);
 }

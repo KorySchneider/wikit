@@ -40,6 +40,7 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 | ---- | ----------- |
 | `--lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp) |
 | `--line num` | Set line wrap length to `num` |
+| `--link` | Print a link to the full article after the summary |
 | `-b` | Open full Wikipedia article in default browser |
 | `--browser browser` | Open full Wikipedia article in specific `browser` |
 | `-d` | Open disambiguation CLI menu |
