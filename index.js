@@ -88,7 +88,7 @@ function printWikiSummary(queryText) {
     if (err) handleError(err);
 
     if (doc) {
-      let summary = doc.sections()[0].text();
+      const summary = doc.sections()[0].text();
 
       // Handle ambiguous results
       if (_disambig || isDisambiguationPage(doc) || summary.includes('may refer to:')) {
@@ -96,12 +96,34 @@ function printWikiSummary(queryText) {
         return;
       }
 
-      // Output
+      // Output all
+      if (argv.all || argv.a) {
+        const sections = doc.sections().map(section => {
+          const text = section.text();
+          if (text) {
+            return {
+              'title': formatSectionTitle(section.title()),
+              'text': lineWrap(text, _lineLength),
+            }
+          }
+        });
+        const output = sections
+          .map(section => {
+            if (section && section.title && section.text) {
+              return `${section.title}\n${section.text}\n\n`;
+            }
+          })
+          .join('');
+        console.log(output);
+        if (argv.link) printLink(_lang, queryText);
+        return;
+      }
+
+      // Output summary
       if (summary) {
         console.log(lineWrap(summary, _lineLength));
-        if (argv.link) {
-          console.log(`\n https://${_lang}.wikipedia.org/wiki/${encodeURIComponent(queryText)}`);
-        }
+        if (argv.link) printLink(_lang, queryText);
+        return;
       } else {
         console.log(`Something went wrong, opening in browser...\n(Error code: 0 | Query: "${queryText}")`);
         console.log('Submit bugs at https://github.com/koryschneider/wikit/issues/new');
@@ -206,12 +228,14 @@ function printUsageAndExit() {
 Usage: $ wikit <query> [-flags]
 
 Quotes are not required for multi-word queries.
-Flags can be placed anywhere.
 
   Flags:
 
     --lang <LANG>        Specify language;
     -l <LANG>            LANG is an HTML ISO language code
+
+    --all                Print all sections of the article
+    -a                   Recommended to pipe into a reader e.g. less
 
     -b                   Open Wikipedia article in default browser
 
@@ -235,7 +259,7 @@ Flags can be placed anywhere.
 
     $ wikit linux -b
 
-    $ wikit --lang es jugo
+    $ wikit jugo --lang es
   `);
 
   process.exit(1);
@@ -249,4 +273,16 @@ function printVersionAndExit() {
 function handleError(error) {
   console.log('Error:', error);
   console.log('Please report errors at https://github.com/koryschneider/wikit/issues/new');
+}
+
+function formatSectionTitle(title) {
+  let output = ` ${title}\n `;
+  for (let i = 0; i < title.length; i++) {
+    output += '-';
+  }
+  return output;
+}
+
+function printLink(lang, title) {
+  console.log(`\n https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title)}`);
 }

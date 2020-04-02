@@ -20,7 +20,6 @@ A command line program for getting Wikipedia summaries easily.
 Syntax: `$ wikit <query> [-flags]`
 
 Quotes are not required for multi-word queries.
-Flags can be placed anywhere.
 
 To change the default language, edit `~/.config/configstore/wikit.json`.
 
@@ -32,13 +31,15 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 
 `$ wikit linux -b`
 
-`$ wikit --lang es jugo`
+`$ wikit jugo -l es --link -a`
 
 ### Flags
 
 | Flag | Description |
 | ---- | ----------- |
 | `--lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp) |
+| `--all`<br>`-a` | Print all sections of the article (the full page).
+Recommended to pipe into a reader e.g. `less` |
 | `--line num` | Set line wrap length to `num` |
 | `--link` | Print a link to the full article after the summary |
 | `-b` | Open full Wikipedia article in default browser |
