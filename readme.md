@@ -38,8 +38,7 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 | Flag | Description |
 | ---- | ----------- |
 | `--lang langCode`<br>`-l langCode` | Specify language; `langCode` is an [HTML ISO language code](https://www.w3schools.com/tags/ref_language_codes.asp) |
-| `--all`<br>`-a` | Print all sections of the article (the full page).
-Recommended to pipe into a reader e.g. `less` |
+| `--all`<br>`-a` | Print all sections of the article (the full page).  Recommended to pipe into a reader e.g. `less` |
 | `--line num` | Set line wrap length to `num` |
 | `--link` | Print a link to the full article after the summary |
 | `-b` | Open full Wikipedia article in default browser |
