@@ -275,7 +275,7 @@ function printVersionAndExit() {
 }
 
 function printNameAndExit() {
-  console.log("wikit");
+  console.log('wikit');
   process.exit(0);
 }
 
