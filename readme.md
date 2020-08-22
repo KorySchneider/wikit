@@ -46,6 +46,7 @@ To change the default language, edit `~/.config/configstore/wikit.json`.
 | `-d` | Open disambiguation CLI menu |
 | `-D` | Open disambiguation page in browser |
 | `--version`<br>`-v` | Print installed version number |
+| `--name`<br>`-n` | Print the name of the program: wikit |
 
 ### Output
 

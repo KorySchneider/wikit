@@ -22,6 +22,8 @@ const argv = require('minimist')(process.argv.slice(2));
 
 // Print version if requested
 if (argv.version || argv.v) printVersionAndExit();
+if (argv.name || argv.n) printNameAndExit();
+
 // If no query, print usage and exit
 if (argv._.length == 0) printUsageAndExit();
 
@@ -251,6 +253,8 @@ Quotes are not required for multi-word queries.
 
     --version / -v       Print installed version number
 
+    --name / -n          Print the CLI name: wikit
+
   Examples:
 
     $ wikit nodejs
@@ -267,6 +271,11 @@ Quotes are not required for multi-word queries.
 
 function printVersionAndExit() {
   console.log(pkg.version);
+  process.exit(0);
+}
+
+function printNameAndExit() {
+  console.log('wikit');
   process.exit(0);
 }
 
