@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+process.title = 'wikit';
 const path = require('path');
 const fs = require('fs');
 
