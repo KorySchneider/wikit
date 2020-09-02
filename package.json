@@ -34,5 +34,8 @@
     "search"
   ],
   "description": "Wikipedia summaries from the command line",
-  "author": "Kory Schneider"
+  "author": "Kory Schneider",
+  "man": [
+    "./data/wikit.1"
+  ]
 }

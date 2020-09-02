@@ -1,0 +1,49 @@
+.Dd $wikitdate$
+.TH wikit 1 "23 Aug 2020" "4.4.0" "wikit man page"
+.Dt wikit 1
+.Os
+.SH NAME
+wikit -- Wikipedia summaries from the command line
+.br
+Wikit is a CLI written in nodejs that allows you to get Wikipedia summaries from the command line
+.SH USAGE
+wikit
+.OP -abdD
+.OP --link
+.OP --lang <LANG>
+.OP --browser <BROWSER>
+.OP --line <NUM>
+.[page]
+.SH DESCRIPTION
+A list of flags and their descriptions in wikit:
+.Bl -tag -width -indent
+.It -a, --all
+Print all sections of the article, recommended to pipe into a reader e.g. less
+.It -b
+Open Wikipedia article in default browser
+.It -d
+Open disambiguation CLI menu
+.It -D
+Open disambiguation page in browser
+.It --link
+Print a link to the full article after the summary
+.It --l, --lang Op LANG
+Specify language; LANG is an HTML ISO language code
+.It --browser Op BROWSER
+Open article in specific BROWSER
+.It --line Op NUM
+Set line wrap length to NUM (minimum 15)
+.It -v, --version
+Print installed version number
+.It -n, --name
+Print the CLI name: wikit
+.El
+.Pp
+.SH EXIT CODES
+Wikit exits with a exit code of 0 unless the following happens (in which it will exit with 1):
+.Bl -tag -width -indent
+.It - The language code provided is unrecognized
+.It - The line length provided is invalid
+.It - No arguments are passed
+.El
+.Pp
